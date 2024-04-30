@@ -1,7 +1,7 @@
 import { URLSearchParams } from "node:url";
 
-import type { TypeGenericObjectOptionalValues } from "@/types/TypeGeneric";
-import type { TypeParams, TypeParamsFormat, TypeParamsPosition } from "@/types/TypeParams";
+import type { TypeGenericObjectOptionalValues } from "../types/TypeGeneric";
+import type { TypeParams, TypeParamsFormat, TypeParamsPosition } from "../types/TypeParams";
 
 const FunctionNormalizeParamsPosition = function (
     latitude: string, 

@@ -6,12 +6,7 @@
     "sourceMap": true,
     "outDir": "dist",
     "allowJs": true,
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": [
-        "./*"
-      ]
-    }
+    "baseUrl": "./"
   },
   "exclude": [
     "node_modules",

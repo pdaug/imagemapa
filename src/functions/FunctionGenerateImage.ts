@@ -1,5 +1,6 @@
-import { TypeParamsFormat } from "@/types/TypeParams";
 import puppeteer from "puppeteer";
+
+import { TypeParamsFormat } from "../types/TypeParams";
 
 type FunctionGenerateImageProps = {
     content: string;
@@ -23,7 +24,7 @@ const FunctionGenerateImage = async function ({
     const page = await browser.newPage();
     await page.setViewport(dimensions);
     await page.setContent(content, { waitUntil });
-    const result = await page.screenshot({ type, quality });
+    const result = await page.screenshot((type === "jpeg") ? { type, quality } : { type });
     return result;
 };
 
