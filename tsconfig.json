@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "esnext",
+    "target": "es2021",
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
     "allowJs": true,
-    "lib": ["dom", "es6"],
     "baseUrl": "./src",
     "paths": {
       "@/*": [
