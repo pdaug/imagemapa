@@ -13,7 +13,7 @@ const EndpointApiIcon = async function (request: IncomingMessage, response: Serv
     const isEndpoint = url.includes(EndpointApiIconUrl);
     const isMethod = (method === EndpointApiIconMethod);
     if (isEndpoint && isMethod) {
-        const queryString = FunctionQueryStringIcon(url);
+        const queryString = FunctionQueryStringIcon(url, EndpointApiIconUrl);
         if (!queryString) {
             return FunctionResponse(response, 400);
         }

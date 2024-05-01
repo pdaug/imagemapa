@@ -1,9 +1,9 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 
 import FunctionResponse from "../../functions/FunctionResponse";
+import FunctionMapImage from "../../functions/FunctionMapImage";
 import FunctionMapStructure from "../../functions/FunctionMapStructure";
 import FunctionQueryStringMap from "../../functions/FunctionQueryStringMap";
-import FunctionMapImage from "../../functions/FunctionMapImage";
 
 export const EndpointApiMapMethod = "GET";
 export const EndpointApiMapUrl = "/api/map";
@@ -13,7 +13,7 @@ const EndpointApiMap = async function (request: IncomingMessage, response: Serve
     const isEndpoint = url.includes(EndpointApiMapUrl);
     const isMethod = (method === EndpointApiMapMethod);
     if (isEndpoint && isMethod) {
-        const queryString = FunctionQueryStringMap(url);
+        const queryString = FunctionQueryStringMap(url, EndpointApiMapUrl);
         if (!queryString) {
             return FunctionResponse(response, 400);
         }

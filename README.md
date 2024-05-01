@@ -14,6 +14,10 @@
 
 ## Endpoint API Map
 
+O endpoint `map` retorna a imagem renderizada de um mapa da coordenada inserida via parâmetros no endereço de consulta. É possível, através dos parâmetros ajustar o zoom, formato de extensão da imagem, qualidade do mapa e dimensões de altura e comprimento.
+
+A tabela com todos os parâmetros do endpoint `map`:
+
 |Query String|Name           |Type   |Default|Values        |Required|
 |------------|---------------|-------|-------|--------------|--------|
 |`lat`       |Latitude       |number |       |-90 to 90     |true    |
@@ -23,6 +27,8 @@
 |`q`         |Quality        |number |70     |0 to 100      |false   |
 |`w`         |Width          |number |640    |100 to 1000   |false   |
 |`h`         |Height         |number |480    |100 to 1000   |false   |
+
+Um exemplo em comando cURL de como deve ser feito a consulta do endpoint `map`:
 
 ```bash
 curl \ 
@@ -39,6 +45,10 @@ curl \
 
 ## Endpoint API Route
 
+O endpoint `route` retorna a rota em mapa em uma imagem renderizada contendo todo o trajeto traçado e marcado com circulos o ponto de origem e o ponto de finalização. Através dos parâmetros, é possível incluir em uma lista todas as posições da rota para formar o trajeto e o texto do ponto de origem e ponto de finalização.
+
+A tabela com todos os parâmetros do endpoint `route`:
+
 |Query String|Name           |Type   |Default|Values           |Required|
 |------------|---------------|-------|-------|-----------------|--------|
 |`pos`       |Positions      |string |       |                 |true    |
@@ -49,6 +59,8 @@ curl \
 |`q`         |Quality        |number |70     |0 to 100         |false   |
 |`w`         |Width          |number |640    |100 to 1000      |false   |
 |`h`         |Height         |number |480    |100 to 1000      |false   |
+
+Um exemplo em comando cURL de como deve ser feito a consulta do endpoint `map`:
 
 ```bash
 curl \ 
@@ -66,6 +78,10 @@ curl \
 
 # Endpoint API Icon
 
+O endpoint `icon` retorna uma imagem contendo um ícone personalizado como marcação em mapa. Através dos parâmetros, é possível passar o endereço do recurso de imagem do ícone e um valor como sua dimensão para ser renderizada.
+
+A tabela com todos os parâmetros do endpoint `icon`:
+
 |Query String|Name           |Type   |Default|Values           |Required|
 |------------|---------------|-------|-------|-----------------|--------|
 |`lat`       |Latitude       |number |       |-90 to 90        |true    |
@@ -77,6 +93,8 @@ curl \
 |`q`         |Quality        |number |70     |0 to 100         |false   |
 |`w`         |Width          |number |640    |100 to 1000      |false   |
 |`h`         |Height         |number |480    |100 to 1000      |false   |
+
+Um exemplo em comando cURL de como deve ser feito a consulta do endpoint `icon`:
 
 ```bash
 curl \ 

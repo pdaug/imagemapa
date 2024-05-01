@@ -3,8 +3,6 @@ import { URLSearchParams } from "node:url";
 import type { TypeQueryStringIcon } from "../types/TypeQueryString";
 import type { TypeGenericObjectOptionalValues } from "../types/TypeGeneric";
 
-import { EndpointApiIconUrl } from "../endpoints/api/EndpointApiIcon";
-
 import FunctionNormalizeSize from "./FunctionNormalizeSize";
 import FunctionNormalizeZoom from "./FunctionNormalizeZoom";
 import FunctionNormalizeFormat from "./FunctionNormalizeFormat";
@@ -40,8 +38,8 @@ const FunctionQueryStringIconNormalize = function (queries: TypeGenericObjectOpt
 
 const FunctionQueryStringIconList = [ "lat", "lng", "icon", "s", "z", "f", "q", "w", "h" ];
 
-const FunctionQueryStringIcon = function (url: string): TypeQueryStringIcon | null {
-    const currentUrl = url.replaceAll(EndpointApiIconUrl, "");
+const FunctionQueryStringIcon = function (url: string, route: string): TypeQueryStringIcon | null {
+    const currentUrl = url.replaceAll(route, "");
     const currentUrlQueries = new URLSearchParams(currentUrl);
     const queries = new Object() as TypeGenericObjectOptionalValues;
     for (const query of FunctionQueryStringIconList) {

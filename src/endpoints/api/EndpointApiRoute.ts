@@ -1,8 +1,8 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 
 import FunctionResponse from "../../functions/FunctionResponse";
-import FunctionMapStructure from "../../functions/FunctionMapStructure";
 import FunctionMapImage from "../../functions/FunctionMapImage";
+import FunctionMapStructure from "../../functions/FunctionMapStructure";
 import FunctionQueryStringRoute from "../../functions/FunctionQueryStringRoute";
 
 export const EndpointApiRouteMethod = "GET";
@@ -13,7 +13,7 @@ const EndpointApiRoute = async function (request: IncomingMessage, response: Ser
     const isEndpoint = url.includes(EndpointApiRouteUrl);
     const isMethod = (method === EndpointApiRouteMethod);
     if (isEndpoint && isMethod) {
-        const queryString = FunctionQueryStringRoute(url);
+        const queryString = FunctionQueryStringRoute(url, EndpointApiRouteUrl);
         if (!queryString) {
             return FunctionResponse(response, 400);
         }

@@ -3,8 +3,6 @@ import { URLSearchParams } from "node:url";
 import type { TypeQueryStringMap } from "../types/TypeQueryString";
 import type { TypeGenericObjectOptionalValues } from "../types/TypeGeneric";
 
-import { EndpointApiMapUrl } from "../endpoints/api/EndpointApiMap";
-
 import FunctionNormalizeSize from "./FunctionNormalizeSize";
 import FunctionNormalizeZoom from "./FunctionNormalizeZoom";
 import FunctionNormalizeFormat from "./FunctionNormalizeFormat";
@@ -36,8 +34,8 @@ const FunctionQueryStringMapNormalize = function (queries: TypeGenericObjectOpti
 
 const FunctionQueryStringMapList = [ "lat", "lng", "z", "f", "q", "w", "h" ];
 
-const FunctionQueryStringMap = function (url: string): TypeQueryStringMap | null {
-    const currentUrl = url.replaceAll(EndpointApiMapUrl, "");
+const FunctionQueryStringMap = function (url: string, route: string): TypeQueryStringMap | null {
+    const currentUrl = url.replaceAll(route, "");
     const currentUrlQueries = new URLSearchParams(currentUrl);
     const queries = new Object() as TypeGenericObjectOptionalValues;
     for (const query of FunctionQueryStringMapList) {
