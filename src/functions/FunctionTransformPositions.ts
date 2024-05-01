@@ -13,7 +13,6 @@ const FunctionTransformPositions = function (pos: string): TypeGenericPositions 
         if (!position) {
             continue;
         }
-        console.log(position);
         const [latitudeString, longitudeString] = position.split(positionSplitter);
         const result = FunctionNormalizePosition(latitudeString, longitudeString);
         if (!result) {

@@ -73,7 +73,6 @@ const EndpointRoute = async function (request: IncomingMessage, response: Server
 
             map.fitBounds(polyline.getBounds());
         </script>`;
-        console.log(script);
         const mapStructure = { script, height, width };
         const content = FunctionMapStructure(mapStructure);
         const generateImage = { content, format, quality, height, width };
