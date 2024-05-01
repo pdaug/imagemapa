@@ -1,10 +1,11 @@
 {
-  "name": "leaflet-endpoint",
+  "name": "imagemapa",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node dist/index"
+    "dev": "tsc && node dist/index",
+    "build": "rimraf dist && tsc"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +14,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
+    "rimraf": "^5.0.5",
     "typescript": "^5.4.5"
   }
 }

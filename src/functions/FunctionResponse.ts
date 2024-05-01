@@ -3,6 +3,7 @@ import { ServerResponse } from "node:http";
 const FunctionResponseCodes = {
     200: "Ok",
     400: "Bad Request",
+    404: "Not Found",
     405: "Method Not Allowed",
 };
 

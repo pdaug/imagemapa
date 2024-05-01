@@ -1,10 +1,10 @@
 import puppeteer from "puppeteer";
 
-import { TypeParamsFormat } from "../types/TypeParams";
+import { TypeQueryStringFormat } from "../types/TypeQueryString";
 
 type FunctionGenerateImageProps = {
     content: string;
-    format: TypeParamsFormat;
+    format: TypeQueryStringFormat;
     quality: number;
     height: number;
     width: number;
