@@ -1,13 +1,13 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 
-import EndpointMap from "./endpoints/EndpointMap";
-import EndpointIcon from "./endpoints/EndpointIcon";
-import EndpointRoute from "./endpoints/EndpointRoute";
+import EndpointApiMap from "./endpoints/api/EndpointApiMap";
+import EndpointApiIcon from "./endpoints/api/EndpointApiIcon";
+import EndpointApiRoute from "./endpoints/api/EndpointApiRoute";
 
 const Handler = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
-    EndpointMap(request, response);
-    EndpointIcon(request, response);
-    EndpointRoute(request, response);
+    EndpointApiMap(request, response);
+    EndpointApiIcon(request, response);
+    EndpointApiRoute(request, response);
     return;
 };
 

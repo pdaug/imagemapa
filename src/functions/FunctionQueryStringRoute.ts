@@ -3,7 +3,7 @@ import { URLSearchParams } from "node:url";
 import type { TypeQueryStringRoute } from "../types/TypeQueryString";
 import type { TypeGenericObjectOptionalValues } from "../types/TypeGeneric";
 
-import { EndpointRouteUrl } from "../endpoints/EndpointRoute";
+import { EndpointApiRouteUrl } from "../endpoints/api/EndpointApiRoute";
 
 import FunctionNormalizeSize from "./FunctionNormalizeSize";
 import FunctionNormalizeColor from "./FunctionNormalizeColor";
@@ -40,7 +40,7 @@ const FunctionQueryStringRouteNormalize = function (queries: TypeGenericObjectOp
 const FunctionQueryStringRouteList = [ "pos", "a", "b", "c", "f", "q", "h", "w" ];
 
 const FunctionQueryStringRoute = function (url: string): TypeQueryStringRoute | null {
-    const currentUrl = url.replaceAll(EndpointRouteUrl, "");
+    const currentUrl = url.replaceAll(EndpointApiRouteUrl, "");
     const currentUrlQueries = new URLSearchParams(currentUrl);
     const queries = new Object() as TypeGenericObjectOptionalValues;
     for (const field of FunctionQueryStringRouteList) {

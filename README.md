@@ -9,7 +9,7 @@
 |`z`         |Zoom           |number |5      |3 to 20       |false   |
 
 ```
-/embed/map/?lat=-23.6153206&lng=-46.7669051&z=11
+/embed/map?lat=-23.6153206&lng=-46.7669051&z=11
 ```
 
 ## Endpoint API Map
@@ -24,14 +24,17 @@
 |`w`         |Width          |number |640    |100 to 1000   |false   |
 |`h`         |Height         |number |480    |100 to 1000   |false   |
 
-```
-/api/map/?lat=-23.6153206&lng=-46.7669051&z=11
-
-/api/map/?lat=-23.6153206&lng=-46.7669051&z=11&f=png
-
-/api/map/?lat=-23.6153206&lng=-46.7669051&z=11&f=jpg&q=70
-
-/api/map/?lat=-23.6153206&lng=-46.7669051&z=11&f=jpg&q=0.5&w=500&h=500
+```bash
+curl \ 
+    -x GET \
+    -d "lat=48.8583287" \
+    -d "lng=2.2944781" \
+    -d "z=16" \
+    -d "f=jpg" \
+    -d "q=70" \
+    -d "w=640" \
+    -d "h=480" \
+    https://imagemapa.com.br/api/map
 ```
 
 ## Endpoint API Route
@@ -47,18 +50,18 @@
 |`w`         |Width          |number |640    |100 to 1000      |false   |
 |`h`         |Height         |number |480    |100 to 1000      |false   |
 
-```
-/api/route/?pos=-23.558609,-46.659551;-23.567210,-46.649518;
-
-/api/route/?pos=-23.558609,-46.659551;-23.567210,-46.649518;&a=1&b=2
-
-/api/route/?pos=-23.558609,-46.659551;-23.567210,-46.649518;&a=1&b=2&c=%23ff0
-
-/api/route/?pos=-23.558609,-46.659551;-23.567210,-46.649518;&a=1&b=2&c=%23ff0&f=png
-
-/api/route/?pos=-23.558609,-46.659551;-23.567210,-46.649518;&a=1&b=2&c=%23ff0&f=png&q=100
-
-/api/route/?pos=-23.558609,-46.659551;-23.567210,-46.649518;&a=1&b=2&c=%23ff0&f=png&q=100&w=1000&h=100
+```bash
+curl \ 
+    -x GET \
+    -d "pos=40.748885,-73.987644;40.747808,-73.985039;40.748468,-73.984588;40.748817, -73.985516" \
+    -d "a=1" \
+    -d "b=2" \
+    -d "c=%23f54242"
+    -d "f=jpg" \
+    -d "q=70" \
+    -d "w=640" \
+    -d "h=480" \
+    https://imagemapa.com.br/api/route
 ```
 
 # Endpoint API Icon
@@ -75,16 +78,17 @@
 |`w`         |Width          |number |640    |100 to 1000      |false   |
 |`h`         |Height         |number |480    |100 to 1000      |false   |
 
-```
-/api/icon/?lat=-23.6153206&lng=-46.7669051&icon=https%3A%2F%2Fi.postimg.cc%2FnzNJmhdh%2Ficon.png
-
-/api/icon/?lat=-23.6153206&lng=-46.7669051&icon=https%3A%2F%2Fi.postimg.cc%2FnzNJmhdh%2Ficon.png&s=96
-
-/api/icon/?lat=-23.6153206&lng=-46.7669051&icon=https%3A%2F%2Fi.postimg.cc%2FnzNJmhdh%2Ficon.png&s=96&z=16
-
-/api/icon/?lat=-23.6153206&lng=-46.7669051&icon=https%3A%2F%2Fi.postimg.cc%2FnzNJmhdh%2Ficon.png&s=96&z=16&f=webp
-
-/api/icon/?lat=-23.6153206&lng=-46.7669051&icon=https%3A%2F%2Fi.postimg.cc%2FnzNJmhdh%2Ficon.png&s=96&z=16&f=webp&q=100
-
-/api/icon/?lat=-23.6153206&lng=-46.7669051&icon=https%3A%2F%2Fi.postimg.cc%2FnzNJmhdh%2Ficon.png&s=96&z=16&f=webp&q=100&w=1000&h=1000
+```bash
+curl \ 
+    -x GET \
+    -d "lat=41.8896913" \
+    -d "lng=12.4917166" \
+    -d "z=18" \
+    -d "icon=https%3A%2F%2Fi.postimg.cc%2FnzNJmhdh%2Ficon.png" \
+    -d "s=96"
+    -d "f=jpg" \
+    -d "q=70" \
+    -d "w=640" \
+    -d "h=480" \
+    https://imagemapa.com.br/api/icon
 ```

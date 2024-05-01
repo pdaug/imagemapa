@@ -23,7 +23,9 @@ const FunctionMapStructure = function ({
         </head>
         <body>
             <div id="map"></div>
-            ${script}
+            <script>
+                ${script}
+            </script>
         </body>
     </html>`;
     return mapStructure;

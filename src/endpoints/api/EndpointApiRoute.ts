@@ -1,17 +1,17 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 
-import FunctionResponse from "../functions/FunctionResponse";
-import FunctionMapStructure from "../functions/FunctionMapStructure";
-import FunctionGenerateImage from "../functions/FunctionGenerateImage";
-import FunctionQueryStringRoute from "../functions/FunctionQueryStringRoute";
+import FunctionResponse from "../../functions/FunctionResponse";
+import FunctionMapStructure from "../../functions/FunctionMapStructure";
+import FunctionMapImage from "../../functions/FunctionMapImage";
+import FunctionQueryStringRoute from "../../functions/FunctionQueryStringRoute";
 
-export const EndpointRouteMethod = "GET";
-export const EndpointRouteUrl = "/api/route/";
+export const EndpointApiRouteMethod = "GET";
+export const EndpointApiRouteUrl = "/api/route";
 
-const EndpointRoute = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
+const EndpointApiRoute = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
     const { url, method } = request;
-    const isEndpoint = url.includes(EndpointRouteUrl);
-    const isMethod = (method === EndpointRouteMethod);
+    const isEndpoint = url.includes(EndpointApiRouteUrl);
+    const isMethod = (method === EndpointApiRouteMethod);
     if (isEndpoint && isMethod) {
         const queryString = FunctionQueryStringRoute(url);
         if (!queryString) {
@@ -20,7 +20,6 @@ const EndpointRoute = async function (request: IncomingMessage, response: Server
         const { positions, pointA, pointB, color, format, quality, height, width } = queryString;
         const positionsStringified = JSON.stringify(positions);
         const script = `
-        <script>
             const positions = ${positionsStringified};
             const firstPositions = positions[0];
             const lastPositions = positions[positions.length - 1];
@@ -72,14 +71,14 @@ const EndpointRoute = async function (request: IncomingMessage, response: Server
             }).addTo(map);
 
             map.fitBounds(polyline.getBounds());
-        </script>`;
-        const mapStructure = { script, height, width };
-        const content = FunctionMapStructure(mapStructure);
-        const generateImage = { content, format, quality, height, width };
-        const imageSource = await FunctionGenerateImage(generateImage);
+        `;
+        const contentOptions = { script, height, width };
+        const content = FunctionMapStructure(contentOptions);
+        const imageSourceOptions = { content, format, quality, height, width };
+        const imageSource = await FunctionMapImage(imageSourceOptions);
         return FunctionResponse(response, imageSource);
     }
     return;
 };
 
-export default EndpointRoute;
+export default EndpointApiRoute;

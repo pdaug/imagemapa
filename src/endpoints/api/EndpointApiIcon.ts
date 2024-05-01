@@ -1,17 +1,17 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 
-import FunctionResponse from "../functions/FunctionResponse";
-import FunctionMapStructure from "../functions/FunctionMapStructure";
-import FunctionGenerateImage from "../functions/FunctionGenerateImage";
-import FunctionQueryStringIcon from "../functions/FunctionQueryStringIcon";
+import FunctionResponse from "../../functions/FunctionResponse";
+import FunctionMapImage from "../../functions/FunctionMapImage";
+import FunctionMapStructure from "../../functions/FunctionMapStructure";
+import FunctionQueryStringIcon from "../../functions/FunctionQueryStringIcon";
 
-export const EndpointIconMethod = "GET";
-export const EndpointIconUrl = "/api/icon/";
+export const EndpointApiIconMethod = "GET";
+export const EndpointApiIconUrl = "/api/icon";
 
-const EndpointIcon = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
+const EndpointApiIcon = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
     const { url, method } = request;
-    const isEndpoint = url.includes(EndpointIconUrl);
-    const isMethod = (method === EndpointIconMethod);
+    const isEndpoint = url.includes(EndpointApiIconUrl);
+    const isMethod = (method === EndpointApiIconMethod);
     if (isEndpoint && isMethod) {
         const queryString = FunctionQueryStringIcon(url);
         if (!queryString) {
@@ -19,7 +19,6 @@ const EndpointIcon = async function (request: IncomingMessage, response: ServerR
         }
         const { latitude, longitude, zoom, icon, size, format, quality, height, width } = queryString;
         const script = `
-        <script>
             const map = L.map("map", {
                 zoomControl: false,
                 attributionControl: false,
@@ -39,15 +38,14 @@ const EndpointIcon = async function (request: IncomingMessage, response: ServerR
             L.marker([${latitude}, ${longitude}], {
                 icon: newIcon,
             }).addTo(map);
-
-        </script>`;
-        const mapStructure = { script, height, width };
-        const content = FunctionMapStructure(mapStructure);
-        const generateImage = { content, format, quality, height, width };
-        const imageSource = await FunctionGenerateImage(generateImage);
+        `;
+        const contentOptions = { script, height, width };
+        const content = FunctionMapStructure(contentOptions);
+        const imageSourceOptions = { content, format, quality, height, width };
+        const imageSource = await FunctionMapImage(imageSourceOptions);
         return FunctionResponse(response, imageSource);
     }
     return;
 };
 
-export default EndpointIcon;
+export default EndpointApiIcon;

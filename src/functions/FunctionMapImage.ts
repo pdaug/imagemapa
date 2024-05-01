@@ -2,7 +2,7 @@ import puppeteer from "puppeteer";
 
 import { TypeQueryStringFormat } from "../types/TypeQueryString";
 
-type FunctionGenerateImageProps = {
+type FunctionMapImageProps = {
     content: string;
     format: TypeQueryStringFormat;
     quality: number;
@@ -10,13 +10,13 @@ type FunctionGenerateImageProps = {
     width: number;
 }
 
-const FunctionGenerateImage = async function ({
+const FunctionMapImage = async function ({
     content,
     format,
     quality,
     height,
     width,
-}: FunctionGenerateImageProps): Promise<Buffer> {
+}: FunctionMapImageProps): Promise<Buffer> {
     const type = (format === "jpg") ? "jpeg" : format;
     const waitUntil = "networkidle2";
     const dimensions = { height, width };
@@ -28,4 +28,4 @@ const FunctionGenerateImage = async function ({
     return result;
 };
 
-export default FunctionGenerateImage;
+export default FunctionMapImage;
