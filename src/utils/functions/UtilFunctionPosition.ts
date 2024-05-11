@@ -1,7 +1,7 @@
-import FunctionNormalizePosition from "./FunctionNormalizePosition";
-import type { TypeGenericPosition, TypeGenericPositions } from "../types/TypeGeneric";
+import UtilValidatorPosition from "../validators/UtilValidatorPosition";
+import type { TypeGenericPosition, TypeGenericPositions } from "../../types/TypeGeneric";
 
-const FunctionTransformPositions = function (pos: string): TypeGenericPositions | null {
+const UtilFunctionPosition = function (pos: string): TypeGenericPositions | null {
     if (!pos) {
         return null;
     }
@@ -14,7 +14,7 @@ const FunctionTransformPositions = function (pos: string): TypeGenericPositions 
             continue;
         }
         const [latitudeString, longitudeString] = position.split(positionSplitter);
-        const result = FunctionNormalizePosition(latitudeString, longitudeString);
+        const result = UtilValidatorPosition(latitudeString, longitudeString);
         if (!result) {
             return null;
         }
@@ -24,4 +24,4 @@ const FunctionTransformPositions = function (pos: string): TypeGenericPositions 
     return positionParsed;
 };
 
-export default FunctionTransformPositions;
+export default UtilFunctionPosition;

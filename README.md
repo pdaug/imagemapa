@@ -1,22 +1,35 @@
 # imagemapa.com.br
 
+![image info](https://raw.githubusercontent.com/pdaug/imagemapa/main/public/screenshot.png)
+
 ## Endpoint Embed Map
+
+O endpoint `/embed/map` retorna uma página dinâmica contendo um mapa localizado na coordenada inserida via parâmetros no endereço de consulta. Com o mapa é possível navegar arrastando o mouse/toque e ampliar com o scroll/pinça.
+
+A tabela com todos os parâmetros do endpoint `/embed/map`:
 
 |Query String|Name           |Type   |Default|Values        |Required|
 |------------|---------------|-------|-------|--------------|--------|
-|`lat`       |Latitude       |number |0      |-90 to 90     |false   |
-|`lng`       |Longitude      |number |0      |-180 to 180   |false   |
+|`lat`       |Latitude       |number |0      |-90 to 90     |true    |
+|`lng`       |Longitude      |number |0      |-180 to 180   |true    |
 |`z`         |Zoom           |number |5      |3 to 20       |false   |
 
-```
-/embed/map?lat=-23.6153206&lng=-46.7669051&z=11
+Um exemplo feito com HTML de como deve ser consumido o endpoint `/api/map`:
+
+```html
+<iframe 
+    width="640" 
+    height="480"
+    frameborder="0" 
+    src="https://imagemapa.com.br/embed/map?lat=-23.6153206&lng=-46.7669051&z=11">
+</iframe>
 ```
 
 ## Endpoint API Map
 
-O endpoint `map` retorna a imagem renderizada de um mapa da coordenada inserida via parâmetros no endereço de consulta. É possível, através dos parâmetros ajustar o zoom, formato de extensão da imagem, qualidade do mapa e dimensões de altura e comprimento.
+O endpoint `/api/map` retorna a imagem renderizada de um mapa da coordenada inserida via parâmetros no endereço de consulta. É possível, através dos parâmetros ajustar o zoom, formato de extensão da imagem, qualidade do mapa e dimensões de altura e comprimento.
 
-A tabela com todos os parâmetros do endpoint `map`:
+A tabela com todos os parâmetros do endpoint `/api/map`:
 
 |Query String|Name           |Type   |Default|Values        |Required|
 |------------|---------------|-------|-------|--------------|--------|
@@ -28,7 +41,7 @@ A tabela com todos os parâmetros do endpoint `map`:
 |`w`         |Width          |number |640    |100 to 1000   |false   |
 |`h`         |Height         |number |480    |100 to 1000   |false   |
 
-Um exemplo em comando cURL de como deve ser feito a consulta do endpoint `map`:
+Um exemplo em comando cURL de como deve ser feito a consulta do endpoint `/api/map`:
 
 ```bash
 curl \ 
@@ -43,11 +56,13 @@ curl \
     https://imagemapa.com.br/api/map
 ```
 
+`https://imagemapa.com.br/api/map?lat=48.8583287&lng=2.2944781&z=16&f=jpg&q=70&w=640&h=480`
+
 ## Endpoint API Route
 
-O endpoint `route` retorna a rota em mapa em uma imagem renderizada contendo todo o trajeto traçado e marcado com circulos o ponto de origem e o ponto de finalização. Através dos parâmetros, é possível incluir em uma lista todas as posições da rota para formar o trajeto e o texto do ponto de origem e ponto de finalização.
+O endpoint `/api/route` retorna a rota em mapa em uma imagem renderizada contendo todo o trajeto traçado e marcado com circulos o ponto de origem e o ponto de finalização. Através dos parâmetros, é possível incluir em uma lista todas as posições da rota para formar o trajeto e o texto do ponto de origem e ponto de finalização.
 
-A tabela com todos os parâmetros do endpoint `route`:
+A tabela com todos os parâmetros do endpoint `/api/route`:
 
 |Query String|Name           |Type   |Default|Values           |Required|
 |------------|---------------|-------|-------|-----------------|--------|
@@ -60,7 +75,7 @@ A tabela com todos os parâmetros do endpoint `route`:
 |`w`         |Width          |number |640    |100 to 1000      |false   |
 |`h`         |Height         |number |480    |100 to 1000      |false   |
 
-Um exemplo em comando cURL de como deve ser feito a consulta do endpoint `map`:
+Um exemplo em comando cURL de como deve ser feito a consulta do endpoint `/api/map`:
 
 ```bash
 curl \ 
@@ -68,7 +83,7 @@ curl \
     -d "pos=40.748885,-73.987644;40.747808,-73.985039;40.748468,-73.984588;40.748817, -73.985516" \
     -d "a=1" \
     -d "b=2" \
-    -d "c=%23f54242"
+    -d "c=#f54242"
     -d "f=jpg" \
     -d "q=70" \
     -d "w=640" \
@@ -78,9 +93,9 @@ curl \
 
 # Endpoint API Icon
 
-O endpoint `icon` retorna uma imagem contendo um ícone personalizado como marcação em mapa. Através dos parâmetros, é possível passar o endereço do recurso de imagem do ícone e um valor como sua dimensão para ser renderizada.
+O endpoint `/api/icon` retorna uma imagem contendo um ícone personalizado como marcação em mapa. Através dos parâmetros, é possível passar o endereço do recurso de imagem do ícone e um valor como sua dimensão para ser renderizada.
 
-A tabela com todos os parâmetros do endpoint `icon`:
+A tabela com todos os parâmetros do endpoint `/api/icon`:
 
 |Query String|Name           |Type   |Default|Values           |Required|
 |------------|---------------|-------|-------|-----------------|--------|
@@ -94,7 +109,7 @@ A tabela com todos os parâmetros do endpoint `icon`:
 |`w`         |Width          |number |640    |100 to 1000      |false   |
 |`h`         |Height         |number |480    |100 to 1000      |false   |
 
-Um exemplo em comando cURL de como deve ser feito a consulta do endpoint `icon`:
+Um exemplo em comando cURL de como deve ser feito a consulta do endpoint `/api/icon`:
 
 ```bash
 curl \ 
@@ -102,7 +117,7 @@ curl \
     -d "lat=41.8896913" \
     -d "lng=12.4917166" \
     -d "z=18" \
-    -d "icon=https%3A%2F%2Fi.postimg.cc%2FnzNJmhdh%2Ficon.png" \
+    -d "icon=https://raw.githubusercontent.com/pdaug/imagemapa/main/public/icon.pngg" \
     -d "s=96"
     -d "f=jpg" \
     -d "q=70" \

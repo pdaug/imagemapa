@@ -1,8 +1,10 @@
 import { createServer } from "node:http";
 
-import Handler from "./handler";
+import Config from "./config";
+import Routes from "./routes";
 
-const server = createServer(Handler);
-const port = (process.env.SERVER_PORT) ? parseInt(process.env.SERVER_PORT) : 8080;
+const server = createServer(Routes);
 
-server.listen(port);
+server.listen(Config.port, Config.host, function () {
+    console.log(`SERVER IS RUNNING ON: ${Config.url()}`);
+});

@@ -1,21 +1,21 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 
-import FunctionResponse from "../../functions/FunctionResponse";
-import FunctionMapImage from "../../functions/FunctionMapImage";
-import FunctionMapStructure from "../../functions/FunctionMapStructure";
-import FunctionQueryStringIcon from "../../functions/FunctionQueryStringIcon";
+import UtilToolResponse from "../../utils/tools/UtilToolResponse";
+import ServicePuppeteer from "../../services/puppeteer/ServicePuppeteer";
+import ServiceLeaflet from "../../services/leaflet/ServiceLeaflet";
+import UtilSchemaIcon from "../../utils/schemas/UtilSchemaIcon";
 
-export const EndpointApiIconMethod = "GET";
-export const EndpointApiIconUrl = "/api/icon";
+export const ControllerApiIconMethod = "GET";
+export const ControllerApiIconUrl = "/api/icon";
 
-const EndpointApiIcon = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
+const ControllerApiIcon = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
     const { url, method } = request;
-    const isEndpoint = url.includes(EndpointApiIconUrl);
-    const isMethod = (method === EndpointApiIconMethod);
-    if (isEndpoint && isMethod) {
-        const queryString = FunctionQueryStringIcon(url, EndpointApiIconUrl);
+    const isController = url.includes(ControllerApiIconUrl);
+    const isMethod = (method === ControllerApiIconMethod);
+    if (isController && isMethod) {
+        const queryString = UtilSchemaIcon(url, ControllerApiIconUrl);
         if (!queryString) {
-            return FunctionResponse(response, 400);
+            return UtilToolResponse(response, 400);
         }
         const { latitude, longitude, zoom, icon, size, format, quality, height, width } = queryString;
         const script = `
@@ -40,12 +40,12 @@ const EndpointApiIcon = async function (request: IncomingMessage, response: Serv
             }).addTo(map);
         `;
         const contentOptions = { script, height, width };
-        const content = FunctionMapStructure(contentOptions);
+        const content = ServiceLeaflet(contentOptions);
         const imageSourceOptions = { content, format, quality, height, width };
-        const imageSource = await FunctionMapImage(imageSourceOptions);
-        return FunctionResponse(response, imageSource);
+        const imageSource = await ServicePuppeteer(imageSourceOptions);
+        return UtilToolResponse(response, imageSource);
     }
     return;
 };
 
-export default EndpointApiIcon;
+export default ControllerApiIcon;

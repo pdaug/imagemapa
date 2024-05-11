@@ -1,8 +1,8 @@
 import puppeteer from "puppeteer";
 
-import { TypeQueryStringFormat } from "../types/TypeQueryString";
+import { TypeQueryStringFormat } from "../../types/TypeQueryString";
 
-type FunctionMapImageProps = {
+type ServicePuppeteerParameters = {
     content: string;
     format: TypeQueryStringFormat;
     quality: number;
@@ -10,17 +10,12 @@ type FunctionMapImageProps = {
     width: number;
 }
 
-const FunctionMapImage = async function ({
-    content,
-    format,
-    quality,
-    height,
-    width,
-}: FunctionMapImageProps): Promise<Buffer> {
+const ServicePuppeteer = async function ({ content, format, quality, height, width }: ServicePuppeteerParameters): Promise<Buffer> {
     const type = (format === "jpg") ? "jpeg" : format;
-    const waitUntil = "networkidle2";
+    const waitUntil = "networkidle0";
     const dimensions = { height, width };
-    const browser = await puppeteer.launch();
+    const browserConfig = { headless: true };
+    const browser = await puppeteer.launch(browserConfig);
     const page = await browser.newPage();
     await page.setViewport(dimensions);
     await page.setContent(content, { waitUntil });
@@ -28,4 +23,4 @@ const FunctionMapImage = async function ({
     return result;
 };
 
-export default FunctionMapImage;
+export default ServicePuppeteer;

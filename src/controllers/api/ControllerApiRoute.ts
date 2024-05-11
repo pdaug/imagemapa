@@ -1,21 +1,21 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 
-import FunctionResponse from "../../functions/FunctionResponse";
-import FunctionMapImage from "../../functions/FunctionMapImage";
-import FunctionMapStructure from "../../functions/FunctionMapStructure";
-import FunctionQueryStringRoute from "../../functions/FunctionQueryStringRoute";
+import UtilToolResponse from "../../utils/tools/UtilToolResponse";
+import ServicePuppeteer from "../../services/puppeteer/ServicePuppeteer";
+import ServiceLeaflet from "../../services/leaflet/ServiceLeaflet";
+import UtilSchemaRoute from "../../utils/schemas/UtilSchemaRoute";
 
-export const EndpointApiRouteMethod = "GET";
-export const EndpointApiRouteUrl = "/api/route";
+export const ControllerApiRouteMethod = "GET";
+export const ControllerApiRouteUrl = "/api/route";
 
-const EndpointApiRoute = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
+const ControllerApiRoute = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
     const { url, method } = request;
-    const isEndpoint = url.includes(EndpointApiRouteUrl);
-    const isMethod = (method === EndpointApiRouteMethod);
-    if (isEndpoint && isMethod) {
-        const queryString = FunctionQueryStringRoute(url, EndpointApiRouteUrl);
+    const isController = url.includes(ControllerApiRouteUrl);
+    const isMethod = (method === ControllerApiRouteMethod);
+    if (isController && isMethod) {
+        const queryString = UtilSchemaRoute(url, ControllerApiRouteUrl);
         if (!queryString) {
-            return FunctionResponse(response, 400);
+            return UtilToolResponse(response, 400);
         }
         const { positions, pointA, pointB, color, format, quality, height, width } = queryString;
         const positionsStringified = JSON.stringify(positions);
@@ -73,12 +73,12 @@ const EndpointApiRoute = async function (request: IncomingMessage, response: Ser
             map.fitBounds(polyline.getBounds());
         `;
         const contentOptions = { script, height, width };
-        const content = FunctionMapStructure(contentOptions);
+        const content = ServiceLeaflet(contentOptions);
         const imageSourceOptions = { content, format, quality, height, width };
-        const imageSource = await FunctionMapImage(imageSourceOptions);
-        return FunctionResponse(response, imageSource);
+        const imageSource = await ServicePuppeteer(imageSourceOptions);
+        return UtilToolResponse(response, imageSource);
     }
     return;
 };
 
-export default EndpointApiRoute;
+export default ControllerApiRoute;
