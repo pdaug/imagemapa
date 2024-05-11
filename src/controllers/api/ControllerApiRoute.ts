@@ -2,6 +2,7 @@ import { IncomingMessage, ServerResponse } from "node:http";
 
 import UtilToolResponse from "../../utils/tools/UtilToolResponse";
 import UtilSchemaRoute from "../../utils/schemas/UtilSchemaRoute";
+import UtilToolResponseError from "../../utils/tools/UtilToolResponseError";
 
 import ServiceLeaflet from "../../services/leaflet/ServiceLeaflet";
 import ServicePuppeteer from "../../services/puppeteer/ServicePuppeteer";
@@ -12,12 +13,12 @@ export const ControllerApiRouteUrl = "/api/route";
 
 const ControllerApiRoute = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
     const { url, method } = request;
-    const isController = url.includes(ControllerApiRouteUrl);
+    const isRoute = url.includes(ControllerApiRouteUrl);
     const isMethod = (method === ControllerApiRouteMethod);
-    if (isController && isMethod) {
+    if (isRoute && isMethod) {
         const queryString = UtilSchemaRoute(url, ControllerApiRouteUrl);
-        if (!queryString) {
-            return UtilToolResponse(response, 400);
+        if (typeof queryString === "string") {
+            return UtilToolResponseError(response, queryString, true);
         }
         const { positions, pointA, pointB, color, format, quality, height, width } = queryString;
         const positionsStringified = JSON.stringify(positions);

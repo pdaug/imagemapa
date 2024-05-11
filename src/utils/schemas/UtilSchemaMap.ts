@@ -9,10 +9,10 @@ import UtilValidatorFormat from "../validators/UtilValidatorFormat";
 import UtilValidatorQuality from "../validators/UtilValidatorQuality";
 import UtilValidatorPosition from "../validators/UtilValidatorPosition";
 
-const UtilSchemaMapNormalize = function (queries: TypeGenericObjectOptionalValues): TypeQueryStringMap | null {
+const UtilSchemaMapNormalize = function (queries: TypeGenericObjectOptionalValues): TypeQueryStringMap | string {
     const position = UtilValidatorPosition(queries.lat, queries.lng);
-    if (!position) {
-        return null;
+    if (typeof position === "string") {
+        return position;
     }
     const { latitude, longitude } = position;
     const zoom = UtilValidatorZoom(queries.z);
@@ -34,7 +34,7 @@ const UtilSchemaMapNormalize = function (queries: TypeGenericObjectOptionalValue
 
 const UtilSchemaMapList = [ "lat", "lng", "z", "f", "q", "w", "h" ];
 
-const UtilSchemaMap = function (url: string, route: string): TypeQueryStringMap | null {
+const UtilSchemaMap = function (url: string, route: string): TypeQueryStringMap | string {
     const currentUrl = url.replaceAll(route, "");
     const currentUrlQueries = new URLSearchParams(currentUrl);
     const queries = new Object() as TypeGenericObjectOptionalValues;

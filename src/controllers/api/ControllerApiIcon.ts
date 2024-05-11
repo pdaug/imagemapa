@@ -2,6 +2,7 @@ import { IncomingMessage, ServerResponse } from "node:http";
 
 import UtilSchemaIcon from "../../utils/schemas/UtilSchemaIcon";
 import UtilToolResponse from "../../utils/tools/UtilToolResponse";
+import UtilToolResponseError from "../../utils/tools/UtilToolResponseError";
 
 import ServiceLeaflet from "../../services/leaflet/ServiceLeaflet";
 import ServicePuppeteer from "../../services/puppeteer/ServicePuppeteer";
@@ -12,12 +13,12 @@ export const ControllerApiIconUrl = "/api/icon";
 
 const ControllerApiIcon = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
     const { url, method } = request;
-    const isController = url.includes(ControllerApiIconUrl);
+    const isRoute = url.includes(ControllerApiIconUrl);
     const isMethod = (method === ControllerApiIconMethod);
-    if (isController && isMethod) {
+    if (isRoute && isMethod) {
         const queryString = UtilSchemaIcon(url, ControllerApiIconUrl);
-        if (!queryString) {
-            return UtilToolResponse(response, 400);
+        if (typeof queryString === "string") {
+            return UtilToolResponseError(response, queryString, true);
         }
         const { latitude, longitude, zoom, icon, size, format, quality, height, width } = queryString;
         const script = ServiceLeafletScriptIcon(latitude, longitude, zoom, icon, size);

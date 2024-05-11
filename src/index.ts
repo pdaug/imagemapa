@@ -6,5 +6,5 @@ import Routes from "./routes";
 const server = createServer(Routes);
 
 server.listen(Config.port, Config.host, function () {
-    console.log(`SERVER IS RUNNING ON: ${Config.url()}`);
+    console.log(`SERVER IS RUNNING ON: ${Config.url}`);
 });

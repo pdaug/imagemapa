@@ -9,10 +9,10 @@ import UtilValidatorFormat from "../validators/UtilValidatorFormat";
 import UtilValidatorQuality from "../validators/UtilValidatorQuality";
 import UtilValidatorPosition from "../validators/UtilValidatorPosition";
 
-const UtilSchemaIconNormalize = function (queries: TypeGenericObjectOptionalValues): TypeQueryStringIcon | null {
+const UtilSchemaIconNormalize = function (queries: TypeGenericObjectOptionalValues): TypeQueryStringIcon | string {
     const position = UtilValidatorPosition(queries.lat, queries.lng);
-    if (!position) {
-        return null;
+    if (typeof position === "string") {
+        return position;
     }
     const { latitude, longitude } = position;
     const icon = queries.icon;
@@ -38,7 +38,7 @@ const UtilSchemaIconNormalize = function (queries: TypeGenericObjectOptionalValu
 
 const UtilSchemaIconList = [ "lat", "lng", "icon", "s", "z", "f", "q", "w", "h" ];
 
-const UtilSchemaIcon = function (url: string, route: string): TypeQueryStringIcon | null {
+const UtilSchemaIcon = function (url: string, route: string): TypeQueryStringIcon | string {
     const currentUrl = url.replaceAll(route, "");
     const currentUrlQueries = new URLSearchParams(currentUrl);
     const queries = new Object() as TypeGenericObjectOptionalValues;

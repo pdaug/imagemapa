@@ -12,10 +12,10 @@ import UtilValidatorFormat from "../validators/UtilValidatorFormat";
 import UtilValidatorQuality from "../validators/UtilValidatorQuality";
 import UtilFunctionPosition from "../functions/UtilFunctionPosition";
 
-const UtilSchemaRouteNormalize = function (queries: TypeGenericObjectOptionalValues): TypeQueryStringRoute | null {
+const UtilSchemaRouteNormalize = function (queries: TypeGenericObjectOptionalValues): TypeQueryStringRoute | string {
     const positions = UtilFunctionPosition(queries.pos);
-    if (!positions) {
-        return null;
+    if (typeof positions === "string") {
+        return positions;
     }
     const pointA = UtilValidatorPoint(queries.a, ConfigLeaflet.pointA);
     const pointB = UtilValidatorPoint(queries.b, ConfigLeaflet.pointB);
@@ -39,7 +39,7 @@ const UtilSchemaRouteNormalize = function (queries: TypeGenericObjectOptionalVal
 
 const UtilSchemaRouteList = [ "pos", "a", "b", "c", "f", "q", "h", "w" ];
 
-const UtilSchemaRoute = function (url: string, route: string): TypeQueryStringRoute | null {
+const UtilSchemaRoute = function (url: string, route: string): TypeQueryStringRoute | string {
     const currentUrl = url.replaceAll(route, "");
     const currentUrlQueries = new URLSearchParams(currentUrl);
     const queries = new Object() as TypeGenericObjectOptionalValues;

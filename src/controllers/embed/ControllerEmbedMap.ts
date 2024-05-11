@@ -2,6 +2,7 @@ import { IncomingMessage, ServerResponse } from "node:http";
 
 import UtilSchemaMap from "../../utils/schemas/UtilSchemaMap";
 import UtilFunctionResponse from "../../utils/tools/UtilToolResponse";
+import UtilToolResponseError from "../../utils/tools/UtilToolResponseError";
 
 import ServiceLeaflet from "../../services/leaflet/ServiceLeaflet";
 import ServiceLeafletScriptMap from "../../services/leaflet/ServiceLeafletScriptMap";
@@ -11,12 +12,12 @@ export const ControllerEmbedMapUrl = "/embed/map";
 
 const ControllerEmbedMap = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
     const { url, method } = request;
-    const isController = url.includes(ControllerEmbedMapUrl);
+    const isRoute = url.includes(ControllerEmbedMapUrl);
     const isMethod = (method === ControllerEmbedMapMethod);
-    if (isController && isMethod) {
+    if (isRoute && isMethod) {
         const queryString = UtilSchemaMap(url, ControllerEmbedMapUrl);
-        if (!queryString) {
-            return UtilFunctionResponse(response, 400);
+        if (typeof queryString === "string") {
+            return UtilToolResponseError(response, queryString);
         }
         const { latitude, longitude, zoom } = queryString;
         const script = ServiceLeafletScriptMap(latitude, longitude, zoom);

@@ -15,7 +15,7 @@ const ControllerSourceFiles = [
         url: "/leaflet/script.js",
         contentType: "text/javascript",
         path: "./public/leaflet/script.js",
-    }
+    },
 ];
 
 const ControllerSource = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {

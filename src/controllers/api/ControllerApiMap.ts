@@ -2,6 +2,7 @@ import { IncomingMessage, ServerResponse } from "node:http";
 
 import UtilSchemaMap from "../../utils/schemas/UtilSchemaMap";
 import UtilToolResponse from "../../utils/tools/UtilToolResponse";
+import UtilToolResponseError from "../../utils/tools/UtilToolResponseError";
 
 import ServiceLeaflet from "../../services/leaflet/ServiceLeaflet";
 import ServicePuppeteer from "../../services/puppeteer/ServicePuppeteer";
@@ -12,12 +13,12 @@ export const ControllerApiMapUrl = "/api/map";
 
 const ControllerApiMap = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
     const { url, method } = request;
-    const isController = url.includes(ControllerApiMapUrl);
+    const isRoute = url.includes(ControllerApiMapUrl);
     const isMethod = (method === ControllerApiMapMethod);
-    if (isController && isMethod) {
+    if (isRoute && isMethod) {
         const queryString = UtilSchemaMap(url, ControllerApiMapUrl);
-        if (!queryString) {
-            return UtilToolResponse(response, 400);
+        if (typeof queryString === "string") {
+            return UtilToolResponseError(response, queryString, true);
         }
         const { latitude, longitude, zoom, format, quality, height, width } = queryString;
         const script = ServiceLeafletScriptMap(latitude, longitude, zoom);

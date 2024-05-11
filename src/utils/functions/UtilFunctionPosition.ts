@@ -1,9 +1,9 @@
 import UtilValidatorPosition from "../validators/UtilValidatorPosition";
 import type { TypeGenericPosition, TypeGenericPositions } from "../../types/TypeGeneric";
 
-const UtilFunctionPosition = function (pos: string): TypeGenericPositions | null {
+const UtilFunctionPosition = function (pos: string): TypeGenericPositions | string {
     if (!pos) {
-        return null;
+        return "invalid positions";
     }
     const positionSplitter = ",";
     const positionsSplitter = ";";
@@ -15,8 +15,8 @@ const UtilFunctionPosition = function (pos: string): TypeGenericPositions | null
         }
         const [latitudeString, longitudeString] = position.split(positionSplitter);
         const result = UtilValidatorPosition(latitudeString, longitudeString);
-        if (!result) {
-            return null;
+        if (typeof result === "string") {
+            return "list has an invalid position";
         }
         const { latitude, longitude } = result;
         positionParsed.push([latitude, longitude]);
