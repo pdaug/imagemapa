@@ -1,5 +1,7 @@
 import { URLSearchParams } from "node:url";
 
+import ConfigLeaflet from "../../config/ConfigLeaflet";
+
 import type { TypeQueryStringRoute } from "../../types/TypeQueryString";
 import type { TypeGenericObjectOptionalValues } from "../../types/TypeGeneric";
 
@@ -15,9 +17,9 @@ const UtilSchemaRouteNormalize = function (queries: TypeGenericObjectOptionalVal
     if (!positions) {
         return null;
     }
-    const pointA = UtilValidatorPoint(queries.a, "A");
-    const pointB = UtilValidatorPoint(queries.b, "B");
-    const color = UtilValidatorColor(queries.c, "#000");
+    const pointA = UtilValidatorPoint(queries.a, ConfigLeaflet.pointA);
+    const pointB = UtilValidatorPoint(queries.b, ConfigLeaflet.pointB);
+    const color = UtilValidatorColor(queries.c, ConfigLeaflet.colorDefault);
     const format = UtilValidatorFormat(queries.f) ? queries.f : "jpg";
     const quality = UtilValidatorQuality(queries.q);
     const width = UtilValidatorSize(queries.w, 640);

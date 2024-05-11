@@ -5,6 +5,11 @@ const ConfigLeaflet = {
 
     heightDefault: "100vh",
     widthDefault: "100vw",
+
+    colorDefault: "#000",
+    
+    pointA: "A",
+    pointB: "B",
 };
 
 export default ConfigLeaflet;

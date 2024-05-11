@@ -1,8 +1,10 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 
-import UtilFunctionResponse from "../../utils/tools/UtilToolResponse";
-import ServiceLeaflet from "../../services/leaflet/ServiceLeaflet";
 import UtilSchemaMap from "../../utils/schemas/UtilSchemaMap";
+import UtilFunctionResponse from "../../utils/tools/UtilToolResponse";
+
+import ServiceLeaflet from "../../services/leaflet/ServiceLeaflet";
+import ServiceLeafletScriptMap from "../../services/leaflet/ServiceLeafletScriptMap";
 
 export const ControllerEmbedMapMethod = "GET";
 export const ControllerEmbedMapUrl = "/embed/map";
@@ -17,17 +19,7 @@ const ControllerEmbedMap = async function (request: IncomingMessage, response: S
             return UtilFunctionResponse(response, 400);
         }
         const { latitude, longitude, zoom } = queryString;
-        const script = `
-            const map = L.map("map", {
-                zoomControl: false,
-                attributionControl: false,
-            });
-            map.setView([${latitude},${longitude}], ${zoom});
-            L.tileLayer("http://{s}.google.com/vt/lyrs=m&hl=pt-BR&x={x}&y={y}&z={z}&scale=2", {
-                maxZoom: 20,
-                subdomains:[ "mt0", "mt1", "mt2", "mt3" ],
-            }).addTo(map);
-        `;
+        const script = ServiceLeafletScriptMap(latitude, longitude, zoom);
         const contentOptions = { script, height: NaN, width: NaN };
         const content = ServiceLeaflet(contentOptions);
         return UtilFunctionResponse(response, content);
