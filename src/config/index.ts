@@ -1,7 +1,7 @@
 const secure = Boolean(process.env.SERVER_SECURE);
 const protocol = (secure) ? "https" : "http";
 
-const hostDefault = "127.0.0.1";
+const hostDefault = "localhost";
 const host = (process.env.SERVER_HOST) ? process.env.SERVER_HOST : hostDefault;
 
 const portDefault = 8080;

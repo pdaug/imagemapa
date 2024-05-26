@@ -8,6 +8,8 @@ import ControllerApiRoute from "../controllers/api/ControllerApiRoute";
 
 import ControllerSource from "../controllers/source/ControllerSource";
 
+import ControllerErrorNotFound from "../controllers/errors/ControllerErrorNotFound";
+
 const Routes = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
 
     ControllerEmbedMap(request, response);
@@ -17,6 +19,8 @@ const Routes = async function (request: IncomingMessage, response: ServerRespons
     ControllerApiRoute(request, response);
 
     ControllerSource(request, response);
+
+    ControllerErrorNotFound(request, response);
 
     return;
 };
