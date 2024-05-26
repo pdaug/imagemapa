@@ -26,7 +26,8 @@ const ControllerApiIcon = async function (request: IncomingMessage, response: Se
         const content = ServiceLeaflet(contentOptions);
         const imageSourceOptions = { content, format, quality, height, width };
         const imageSource = await ServicePuppeteer(imageSourceOptions);
-        return UtilToolResponse(response, imageSource);
+        const contentType = `image/${format}`;
+        return UtilToolResponse(response, imageSource, 200, contentType);
     }
     return;
 };
