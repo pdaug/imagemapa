@@ -34,8 +34,8 @@ const UtilSchemaMapNormalize = function (queries: TypeGenericObjectOptionalValue
 
 const UtilSchemaMapList = [ "lat", "lng", "z", "f", "q", "w", "h" ];
 
-const UtilSchemaMap = function (url: string, route: string): TypeQueryStringMap | string {
-    const currentUrl = url.replaceAll(route, "");
+const UtilSchemaMap = function (url: string, pathUrl: string): TypeQueryStringMap | string {
+    const currentUrl = url.replaceAll(pathUrl, "");
     const currentUrlQueries = new URLSearchParams(currentUrl);
     const queries = new Object() as TypeGenericObjectOptionalValues;
     for (const query of UtilSchemaMapList) {

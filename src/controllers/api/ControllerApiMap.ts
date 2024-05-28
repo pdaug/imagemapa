@@ -1,4 +1,6 @@
-import { IncomingMessage, ServerResponse } from "node:http";
+import { ServerResponse } from "node:http";
+
+import type { TypeGenericRequest } from "src/types/TypeGeneric";
 
 import UtilSchemaMap from "../../utils/schemas/UtilSchemaMap";
 import UtilToolResponse from "../../utils/tools/UtilToolResponse";
@@ -8,28 +10,25 @@ import ServiceLeaflet from "../../services/leaflet/ServiceLeaflet";
 import ServicePuppeteer from "../../services/puppeteer/ServicePuppeteer";
 import ServiceLeafletScriptMap from "../../services/leaflet/ServiceLeafletScriptMap";
 
-export const ControllerApiMapMethod = "GET";
-export const ControllerApiMapUrl = "/api/map";
-
-const ControllerApiMap = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
-    const { url, method } = request;
-    const isRoute = url.includes(ControllerApiMapUrl);
-    const isMethod = (method === ControllerApiMapMethod);
-    if (isRoute && isMethod) {
-        const queryString = UtilSchemaMap(url, ControllerApiMapUrl);
-        if (typeof queryString === "string") {
-            return UtilToolResponseError(response, queryString, true);
-        }
-        const { latitude, longitude, zoom, format, quality, height, width } = queryString;
-        const script = ServiceLeafletScriptMap(latitude, longitude, zoom);
-        const contentOptions = { script, height, width };
-        const content = ServiceLeaflet(contentOptions);
-        const imageSourceOptions = { content, format, quality, height, width };
-        const imageSource = await ServicePuppeteer(imageSourceOptions);
-        const contentType = `image/${format}`;
-        return UtilToolResponse(response, imageSource, 200, contentType);
+const ControllerApiMap = async function (request: TypeGenericRequest, response: ServerResponse): Promise<void> {
+    const { url, data } = request;
+    if (!data.routeUrl) {
+        return UtilToolResponseError(response, "no route url")
     }
-    return;
+    const routeUrl = String(data.routeUrl);
+    const queryString = UtilSchemaMap(url, routeUrl);
+    if (typeof queryString === "string") {
+        return UtilToolResponseError(response, queryString, true);
+    }
+    const { latitude, longitude, zoom, format, quality, height, width } = queryString;
+    const script = ServiceLeafletScriptMap(latitude, longitude, zoom);
+    const contentOptions = { script, height, width };
+    const content = ServiceLeaflet(contentOptions);
+    const imageSourceOptions = { content, format, quality, height, width };
+    const imageSource = await ServicePuppeteer(imageSourceOptions);
+    const contentType = `image/${format}`;
+    request.data.ok = true;
+    return UtilToolResponse(response, imageSource, 200, contentType);
 };
 
 export default ControllerApiMap;

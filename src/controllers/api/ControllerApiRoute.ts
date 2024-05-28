@@ -1,4 +1,6 @@
-import { IncomingMessage, ServerResponse } from "node:http";
+import { ServerResponse } from "node:http";
+
+import type { TypeGenericRequest } from "src/types/TypeGeneric";
 
 import UtilToolResponse from "../../utils/tools/UtilToolResponse";
 import UtilSchemaRoute from "../../utils/schemas/UtilSchemaRoute";
@@ -8,29 +10,26 @@ import ServiceLeaflet from "../../services/leaflet/ServiceLeaflet";
 import ServicePuppeteer from "../../services/puppeteer/ServicePuppeteer";
 import ServiceLeafletScriptRoute from "../../services/leaflet/ServiceLeafletScriptRoute";
 
-export const ControllerApiRouteMethod = "GET";
-export const ControllerApiRouteUrl = "/api/route";
-
-const ControllerApiRoute = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
-    const { url, method } = request;
-    const isRoute = url.includes(ControllerApiRouteUrl);
-    const isMethod = (method === ControllerApiRouteMethod);
-    if (isRoute && isMethod) {
-        const queryString = UtilSchemaRoute(url, ControllerApiRouteUrl);
-        if (typeof queryString === "string") {
-            return UtilToolResponseError(response, queryString, true);
-        }
-        const { positions, pointA, pointB, color, format, quality, height, width } = queryString;
-        const positionsStringified = JSON.stringify(positions);
-        const script = ServiceLeafletScriptRoute(positionsStringified, color, pointA, pointB);
-        const contentOptions = { script, height, width };
-        const content = ServiceLeaflet(contentOptions);
-        const imageSourceOptions = { content, format, quality, height, width };
-        const imageSource = await ServicePuppeteer(imageSourceOptions);
-        const contentType = `image/${format}`;
-        return UtilToolResponse(response, imageSource, 200, contentType);
+const ControllerApiRoute = async function (request: TypeGenericRequest, response: ServerResponse): Promise<void> {
+    const { url, data } = request;
+    if (!data.routeUrl) {
+        return UtilToolResponseError(response, "no route url")
     }
-    return;
+    const routeUrl = String(data.routeUrl);
+    const queryString = UtilSchemaRoute(url, routeUrl);
+    if (typeof queryString === "string") {
+        return UtilToolResponseError(response, queryString, true);
+    }
+    const { positions, pointA, pointB, color, format, quality, height, width } = queryString;
+    const positionsStringified = JSON.stringify(positions);
+    const script = ServiceLeafletScriptRoute(positionsStringified, color, pointA, pointB);
+    const contentOptions = { script, height, width };
+    const content = ServiceLeaflet(contentOptions);
+    const imageSourceOptions = { content, format, quality, height, width };
+    const imageSource = await ServicePuppeteer(imageSourceOptions);
+    const contentType = `image/${format}`;
+    request.data.ok = true;
+    return UtilToolResponse(response, imageSource, 200, contentType);
 };
 
 export default ControllerApiRoute;

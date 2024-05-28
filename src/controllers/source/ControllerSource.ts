@@ -1,6 +1,7 @@
+import { ServerResponse } from "node:http";
 import { readFile } from "node:fs/promises";
-import { IncomingMessage, ServerResponse } from "node:http";
 
+import type { TypeGenericRequest } from "src/types/TypeGeneric";
 import UtilFunctionResponse from "../../utils/tools/UtilToolResponse";
 
 const ControllerSourceFiles = [
@@ -18,16 +19,16 @@ const ControllerSourceFiles = [
     },
 ];
 
-const ControllerSource = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
+const ControllerSource = async function (request: TypeGenericRequest, response: ServerResponse): Promise<void> {
     const { url, method } = request;
     for (const file of ControllerSourceFiles) {
         const isRoute = (url === file.url);
         const isMethod = (method === file.method);
         if (isRoute && isMethod) {
+            request.data.ok = true;
             const { contentType } = file;
             const content = await readFile(file.path);
-            UtilFunctionResponse(response, content, 200, contentType)
-            return;
+            return UtilFunctionResponse(response, content, 200, contentType);
         }
     }
     return;
