@@ -1,0 +1,12 @@
+config:
+  target: "http://localhost:8080"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+
+scenarios:
+  - flow:
+    - get:
+        url: "/api/address?lat=51.5320122&lng=-0.1773339"
+
+# artillery run ./test/load/ApiAddress.test.yml
