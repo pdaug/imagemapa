@@ -2,33 +2,33 @@ import { ServerResponse } from "node:http";
 
 import type { TypeGenericRequest } from "src/types/TypeGeneric";
 
-import UtilSchemaIcon from "../../utils/schemas/UtilSchemaIcon";
 import UtilToolResponse from "../../utils/tools/UtilToolResponse";
+import UtilSchemaRoute from "../../utils/schemas/UtilSchemaRoute";
 import UtilToolResponseError from "../../utils/tools/UtilToolResponseError";
 
 import ServiceLeaflet from "../../services/leaflet/ServiceLeaflet";
-import ServicePuppeteer from "../../services/puppeteer/ServicePuppeteer";
-import ServiceLeafletScriptIcon from "../../services/leaflet/ServiceLeafletScriptIcon";
+import ServicePuppeteerCapture from "../../services/puppeteer/ServicePuppeteerCapture";
+import ServiceLeafletScriptRoute from "../../services/leaflet/ServiceLeafletScriptRoute";
 
-const ControllerApiIcon = async function (request: TypeGenericRequest, response: ServerResponse): Promise<void> {
+const ControllerImgRoute = async function (request: TypeGenericRequest, response: ServerResponse): Promise<void> {
     const { url, data } = request;
     if (!data.routeUrl) {
         return UtilToolResponseError(response, "no route url")
     }
     const routeUrl = String(data.routeUrl);
-    const queryString = UtilSchemaIcon(url, routeUrl);
+    const queryString = UtilSchemaRoute(url, routeUrl);
     if (typeof queryString === "string") {
         return UtilToolResponseError(response, queryString, true);
     }
-    const { latitude, longitude, zoom, icon, size, format, quality, height, width } = queryString;
-    const script = ServiceLeafletScriptIcon(latitude, longitude, zoom, icon, size);
+    const { positions, pointA, pointB, color, format, quality, height, width } = queryString;
+    const positionsStringified = JSON.stringify(positions);
+    const script = ServiceLeafletScriptRoute(positionsStringified, color, pointA, pointB);
     const contentOptions = { script, height, width };
     const content = ServiceLeaflet(contentOptions);
     const imageSourceOptions = { content, format, quality, height, width };
-    const imageSource = await ServicePuppeteer(imageSourceOptions);
+    const imageSource = await ServicePuppeteerCapture(imageSourceOptions);
     const contentType = `image/${format}`;
-    request.data.ok = true;
     return UtilToolResponse(response, imageSource, 200, contentType);
 };
 
-export default ControllerApiIcon;
+export default ControllerImgRoute;

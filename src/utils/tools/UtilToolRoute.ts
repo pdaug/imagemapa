@@ -13,6 +13,7 @@ const UtilToolRoute = async function (routeMethod: UtilToolRouteMethod, routeUrl
     }
     const isRouteUrl = url.includes(routeUrl);
     if (isRouteUrl && isRouteMethod) {
+        request.data.ok = true;
         request.data.routeUrl = routeUrl;
         await func(request, response);
         return;

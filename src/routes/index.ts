@@ -3,10 +3,11 @@ import { IncomingMessage, ServerResponse } from "node:http";
 import type { TypeGenericObjectUnkownValues } from "src/types/TypeGeneric";
 
 import ControllerEmbedMap from "../controllers/embed/ControllerEmbedMap";
-import ControllerApiMap from "../controllers/api/ControllerApiMap";
-import ControllerApiIcon from "../controllers/api/ControllerApiIcon";
-import ControllerApiRoute from "../controllers/api/ControllerApiRoute";
+import ControllerImgIcon from "../controllers/img/ControllerImgIcon";
+import ControllerImgMap from "../controllers/img/ControllerImgMap";
+import ControllerImgRoute from "../controllers/img/ControllerImgRoute";
 import ControllerSource from "../controllers/source/ControllerSource";
+import ControllerApiAddress from "../controllers/api/ControllerApiAddress";
 
 import UtilToolRoute from "../utils/tools/UtilToolRoute";
 import UtilToolNotFound from "../utils/tools/UtilToolNotFound";
@@ -18,9 +19,11 @@ const Routes = async function (request: IncomingMessage, response: ServerRespons
 
     UtilToolRoute("GET", "/embed/map", newRequest, response, ControllerEmbedMap);
 
-    UtilToolRoute("GET", "/api/map", newRequest, response, ControllerApiMap);
-    UtilToolRoute("GET", "/api/icon", newRequest, response, ControllerApiIcon);
-    UtilToolRoute("GET", "/api/route", newRequest, response, ControllerApiRoute);
+    UtilToolRoute("GET", "/img/map", newRequest, response, ControllerImgMap);
+    UtilToolRoute("GET", "/img/icon", newRequest, response, ControllerImgIcon);
+    UtilToolRoute("GET", "/img/route", newRequest, response, ControllerImgRoute);
+
+    UtilToolRoute("GET", "/api/address", newRequest, response, ControllerApiAddress);
 
     UtilToolRoute("GET", "*", newRequest, response, ControllerSource);
     UtilToolNotFound(newRequest, response);

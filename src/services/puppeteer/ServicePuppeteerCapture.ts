@@ -2,15 +2,15 @@ import puppeteer from "puppeteer";
 
 import { TypeQueryStringFormat } from "../../types/TypeQueryString";
 
-type ServicePuppeteerParameters = {
+type ServicePuppeteerCaptureParameters = {
     content: string;
     format: TypeQueryStringFormat;
     quality: number;
     height: number;
     width: number;
-}
+};
 
-const ServicePuppeteer = async function ({ content, format, quality, height, width }: ServicePuppeteerParameters): Promise<Buffer> {
+const ServicePuppeteerCapture = async function ({ content, format, quality, height, width }: ServicePuppeteerCaptureParameters): Promise<Buffer> {
     const type = (format === "jpg") ? "jpeg" : format;
     const waitUntil = "networkidle0";
     const dimensions = { height, width };
@@ -23,4 +23,4 @@ const ServicePuppeteer = async function ({ content, format, quality, height, wid
     return result;
 };
 
-export default ServicePuppeteer;
+export default ServicePuppeteerCapture;

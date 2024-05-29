@@ -3,8 +3,8 @@ import { ServerResponse } from "node:http";
 import type { TypeQueryStringFormat } from "src/types/TypeQueryString";
 
 import ServiceHtml from "../../services/html/ServiceHtml";
-import ServicePuppeteer from "../../services/puppeteer/ServicePuppeteer";
 import ServiceHtmlElement from "../../services/html/ServiceHtmlElement";
+import ServicePuppeteerCapture from "../../services/puppeteer/ServicePuppeteerCapture";
 
 const UtilToolResponseErrorElement = function (content: string): string {
     const style = `
@@ -34,7 +34,7 @@ const UtilToolResponseErrorImage = async function (content: string): Promise<Buf
     const width = 640;
     const height = 480;
     const imageSourceOptions = { content, format, quality, height, width };
-    const imageSource = await ServicePuppeteer(imageSourceOptions);
+    const imageSource = await ServicePuppeteerCapture(imageSourceOptions);
     return imageSource;
 };
 

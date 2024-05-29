@@ -23,7 +23,6 @@ const ControllerEmbedMap = async function (request: TypeGenericRequest, response
     const script = ServiceLeafletScriptMap(latitude, longitude, zoom);
     const contentOptions = { script, height: NaN, width: NaN };
     const content = ServiceLeaflet(contentOptions);
-    request.data.ok = true;
     return UtilFunctionResponse(response, content);
 };
 
