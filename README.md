@@ -140,7 +140,7 @@ Outro exemplo contendo apenas o endereço da rota:
 https://imagemapa.com.br/img/route?pos=40.748885,-73.987644;40.747808,-73.985039;40.748468,-73.984588;40.748817,-73.985516&a=1&b=2&c=f54242&f=jpg&q=70&w=640&h=480
 ```
 
-# Rota IMG Icon
+## Rota IMG Icon
 
 A rota `/img/icon` retorna uma imagem contendo um ícone personalizado como marcação em mapa. Através dos parâmetros, é possível passar o endereço do recurso de imagem do ícone e um valor como sua dimensão para ser renderizada.
 
