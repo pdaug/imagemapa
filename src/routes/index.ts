@@ -12,20 +12,23 @@ import ControllerApiAddress from "../controllers/api/ControllerApiAddress";
 import UtilToolRoute from "../utils/tools/UtilToolRoute";
 import UtilToolNotFound from "../utils/tools/UtilToolNotFound";
 
+import MiddlewareCors from "../middleware/MiddlewareCors";
+
 const Routes = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
 
     const data = new Object() as TypeGenericObjectUnkownValues;
     const newRequest = Object.assign(request, { data });
 
-    UtilToolRoute("GET", "/embed/map", newRequest, response, ControllerEmbedMap);
+    UtilToolRoute("GET", "/embed/map", newRequest, MiddlewareCors(response), ControllerEmbedMap);
 
-    UtilToolRoute("GET", "/img/map", newRequest, response, ControllerImgMap);
-    UtilToolRoute("GET", "/img/icon", newRequest, response, ControllerImgIcon);
-    UtilToolRoute("GET", "/img/route", newRequest, response, ControllerImgRoute);
+    UtilToolRoute("GET", "/img/map", newRequest, MiddlewareCors(response), ControllerImgMap);
+    UtilToolRoute("GET", "/img/icon", newRequest, MiddlewareCors(response), ControllerImgIcon);
+    UtilToolRoute("GET", "/img/route", newRequest, MiddlewareCors(response), ControllerImgRoute);
 
-    UtilToolRoute("GET", "/api/address", newRequest, response, ControllerApiAddress);
+    UtilToolRoute("GET", "/api/address", newRequest, MiddlewareCors(response), ControllerApiAddress);
 
-    UtilToolRoute("GET", "*", newRequest, response, ControllerSource);
+    UtilToolRoute("GET", "*", newRequest, MiddlewareCors(response), ControllerSource);
+
     UtilToolNotFound(newRequest, response);
 
     return;
