@@ -2,11 +2,50 @@
 
 ![image info](https://raw.githubusercontent.com/pdaug/imagemapa/main/public/screenshot.png)
 
-## Endpoint Embed Map
+## Rota API Address
 
-O endpoint `/embed/map` retorna uma página dinâmica contendo um mapa localizado na coordenada inserida via parâmetros no endereço de consulta. Com o mapa é possível navegar arrastando o mouse/toque e ampliar com o scroll/pinça.
+A rota `/api/address` retorna estruturadamente os dados de endereço, coordenada e provedor utilizado através dos parâmetros passados.
 
-A tabela com todos os parâmetros do endpoint `/embed/map`:
+A tabela com todos os parâmetros aceitos na rota:
+
+|Query String|Name           |Type   |Default|Values        |Required|
+|------------|---------------|-------|-------|--------------|--------|
+|`lat`       |Latitude       |number |0      |-90 to 90     |true    |
+|`lng`       |Longitude      |number |0      |-180 to 180   |true    |
+
+Um exemplo de como deve ser feito o consumo da rota:
+
+```js
+fetch("https://imagemapa.com.br/api/address?lat=51.5320122&lng=-0.1773339")
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(err => console.error(err));
+```
+
+A tabela mostrando todos os campos retornado pela rota:
+
+|Field       |Name                 |Type                 |
+|------------|---------------------|---------------------|
+|`version`   |Versão da rota       |number               |
+|`server`    |Nome do servidor     |number               |
+|`status`    |Estado da resposta   |"error" ou "success" |
+|`code`      |Código da resposta   |http code            |
+|`message`   |Mensagem da resposta |string               |
+|`path`      |Caminho da rota      |string               |
+|`result`    |Resultado da rota    |object ou string     |
+|`timestamp` |Tempo de repsosta    |number               |
+
+Outro exemplo contendo apenas o endereço da rota:
+
+```
+https://imagemapa.com.br/api/address?lat=51.5320122&lng=-0.1773339
+```
+
+## Rota Embed Map
+
+A rota `/embed/map` retorna uma página dinâmica contendo um mapa localizado na coordenada inserida via parâmetros no endereço de consulta. Com o mapa é possível navegar arrastando o mouse/toque e ampliar com o scroll/pinça.
+
+A tabela com todos os parâmetros da rota:
 
 |Query String|Name           |Type   |Default|Values        |Required|
 |------------|---------------|-------|-------|--------------|--------|
@@ -14,13 +53,9 @@ A tabela com todos os parâmetros do endpoint `/embed/map`:
 |`lng`       |Longitude      |number |0      |-180 to 180   |true    |
 |`z`         |Zoom           |number |5      |3 to 20       |false   |
 
-Um exemplo feito com HTML de como deve ser consumido o endpoint `/api/map`:
+Um exemplo de como o consumo deve ser feito com HTML:
 
 ```html
-<!-- 
-    if you running in your machine, open it:
-    http://localhost:8080/embed/map?lat=-23.6153206&lng=-46.7669051&z=11 
--->
 <iframe 
     width="640" 
     height="480"
@@ -29,11 +64,11 @@ Um exemplo feito com HTML de como deve ser consumido o endpoint `/api/map`:
 </iframe>
 ```
 
-## Endpoint API Map
+## Rota IMG Map
 
-O endpoint `/api/map` retorna a imagem renderizada de um mapa da coordenada inserida via parâmetros no endereço de consulta. É possível, através dos parâmetros ajustar o zoom, formato de extensão da imagem, qualidade do mapa e dimensões de altura e comprimento.
+A rota `/img/map` retorna a imagem renderizada de um mapa da coordenada inserida via parâmetros no endereço de consulta. É possível, através dos parâmetros ajustar o zoom, formato de extensão da imagem, qualidade do mapa e dimensões de altura e comprimento.
 
-A tabela com todos os parâmetros do endpoint `/api/map`:
+A tabela com todos os parâmetros da rota:
 
 |Query String|Name           |Type   |Default|Values        |Required|
 |------------|---------------|-------|-------|--------------|--------|
@@ -45,7 +80,7 @@ A tabela com todos os parâmetros do endpoint `/api/map`:
 |`w`         |Width          |number |640    |100 to 1000   |false   |
 |`h`         |Height         |number |480    |100 to 1000   |false   |
 
-Um exemplo em comando cURL de como deve ser feito a consulta do endpoint `/api/map`:
+Um exemplo em comando cURL de como deve ser feito a consulta da rota:
 
 ```bash
 curl \ 
@@ -57,18 +92,20 @@ curl \
     -d "q=70" \
     -d "w=640" \
     -d "h=480" \
-    https://imagemapa.com.br/api/map
+    https://imagemapa.com.br/img/map
 ```
 
-`http://localhost:8080/api/map?lat=48.8583287&lng=2.2944781&z=16&f=jpg&q=70&w=640&h=480`
+Outro exemplo contendo apenas o endereço da rota:
 
-`https://imagemapa.com.br/api/map?lat=48.8583287&lng=2.2944781&z=16&f=jpg&q=70&w=640&h=480`
+```
+https://imagemapa.com.br/img/map?lat=48.8583287&lng=2.2944781&z=16&f=jpg&q=70&w=640&h=480
+```
 
-## Endpoint API Route
+## Rota IMG Route
 
-O endpoint `/api/route` retorna a rota em mapa em uma imagem renderizada contendo todo o trajeto traçado e marcado com circulos o ponto de origem e o ponto de finalização. Através dos parâmetros, é possível incluir em uma lista todas as posições da rota para formar o trajeto e o texto do ponto de origem e ponto de finalização.
+A rota `/img/route` retorna a rota em mapa em uma imagem renderizada contendo todo o trajeto traçado e marcado com circulos o ponto de origem e o ponto de finalização. Através dos parâmetros, é possível incluir em uma lista todas as posições da rota para formar o trajeto e o texto do ponto de origem e ponto de finalização.
 
-A tabela com todos os parâmetros do endpoint `/api/route`:
+A tabela com todos os parâmetros da rota:
 
 |Query String|Name           |Type   |Default|Values           |Required|
 |------------|---------------|-------|-------|-----------------|--------|
@@ -81,7 +118,7 @@ A tabela com todos os parâmetros do endpoint `/api/route`:
 |`w`         |Width          |number |640    |100 to 1000      |false   |
 |`h`         |Height         |number |480    |100 to 1000      |false   |
 
-Um exemplo em comando cURL de como deve ser feito a consulta do endpoint `/api/map`:
+Um exemplo em comando cURL de como deve ser feito a consulta da rota:
 
 ```bash
 curl \ 
@@ -94,18 +131,20 @@ curl \
     -d "q=70" \
     -d "w=640" \
     -d "h=480" \
-    https://imagemapa.com.br/api/route
+    https://imagemapa.com.br/img/route
 ```
 
-`http://localhost:8080/api/route?pos=40.748885,-73.987644;40.747808,-73.985039;40.748468,-73.984588;40.748817,-73.985516&a=1&b=2&c=f54242&f=jpg&q=70&w=640&h=480`
+Outro exemplo contendo apenas o endereço da rota:
 
-`https://imagemapa.com.br/api/route?pos=40.748885,-73.987644;40.747808,-73.985039;40.748468,-73.984588;40.748817,-73.985516&a=1&b=2&c=f54242&f=jpg&q=70&w=640&h=480`
+```
+https://imagemapa.com.br/img/route?pos=40.748885,-73.987644;40.747808,-73.985039;40.748468,-73.984588;40.748817,-73.985516&a=1&b=2&c=f54242&f=jpg&q=70&w=640&h=480
+```
 
-# Endpoint API Icon
+# Rota IMG Icon
 
-O endpoint `/api/icon` retorna uma imagem contendo um ícone personalizado como marcação em mapa. Através dos parâmetros, é possível passar o endereço do recurso de imagem do ícone e um valor como sua dimensão para ser renderizada.
+A rota `/img/icon` retorna uma imagem contendo um ícone personalizado como marcação em mapa. Através dos parâmetros, é possível passar o endereço do recurso de imagem do ícone e um valor como sua dimensão para ser renderizada.
 
-A tabela com todos os parâmetros do endpoint `/api/icon`:
+A tabela com todos os parâmetros da rota:
 
 |Query String|Name           |Type   |Default|Values           |Required|
 |------------|---------------|-------|-------|-----------------|--------|
@@ -119,7 +158,7 @@ A tabela com todos os parâmetros do endpoint `/api/icon`:
 |`w`         |Width          |number |640    |100 to 1000      |false   |
 |`h`         |Height         |number |480    |100 to 1000      |false   |
 
-Um exemplo em comando cURL de como deve ser feito a consulta do endpoint `/api/icon`:
+Um exemplo em comando cURL de como deve ser feito a consulta da rota:
 
 ```bash
 curl \ 
@@ -133,7 +172,11 @@ curl \
     -d "q=70" \
     -d "w=640" \
     -d "h=480" \
-    https://imagemapa.com.br/api/icon
+    https://imagemapa.com.br/img/icon
 ```
 
-``
+Outro exemplo contendo apenas o endereço da rota:
+
+```
+https://imagemapa.com.br/img/icon?lat=41.8896913&lng=12.4917166&z=16&icon=https%3A%2F%2Fraw.githubusercontent.com%2Fpdaug%2Fimagemapa%2Fmain%2Fpublic%2Ficon.png&s=96&q=70&f=jpg&w=640&h=480
+```
