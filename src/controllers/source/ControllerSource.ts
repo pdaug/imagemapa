@@ -1,7 +1,7 @@
 import { ServerResponse } from "node:http";
 import { readFile } from "node:fs/promises";
 
-import type { TypeGenericRequest } from "src/types/TypeGeneric";
+import type { TypeGenericRequest } from "../../types/TypeGeneric";
 import UtilFunctionResponse from "../../utils/tools/UtilToolResponse";
 
 const ControllerSourceFiles = [

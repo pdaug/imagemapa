@@ -1,6 +1,6 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 
-import type { TypeGenericRequest } from "src/types/TypeGeneric";
+import type { TypeGenericRequest } from "../../types/TypeGeneric";
 
 type UtilToolRouteMethod = "GET" | "POST" | "DELETE" | "PUT";
 

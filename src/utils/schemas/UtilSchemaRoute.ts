@@ -1,9 +1,7 @@
-import { URLSearchParams } from "node:url";
-
 import ConfigLeaflet from "../../config/ConfigLeaflet";
 
+import { TypeGenericObject } from "../../types/TypeGeneric";
 import type { TypeQueryStringRoute } from "../../types/TypeQueryString";
-import type { TypeGenericObjectOptionalValues } from "../../types/TypeGeneric";
 
 import UtilValidatorSize from "../validators/UtilValidatorSize";
 import UtilValidatorColor from "../validators/UtilValidatorColor";
@@ -12,7 +10,7 @@ import UtilValidatorFormat from "../validators/UtilValidatorFormat";
 import UtilValidatorQuality from "../validators/UtilValidatorQuality";
 import UtilFunctionPosition from "../functions/UtilFunctionPosition";
 
-const UtilSchemaRouteNormalize = function (queries: TypeGenericObjectOptionalValues): TypeQueryStringRoute | string {
+const UtilSchemaRoute = function (queries: TypeGenericObject): TypeQueryStringRoute | string {
     const positions = UtilFunctionPosition(queries.pos);
     if (typeof positions === "string") {
         return positions;
@@ -34,19 +32,6 @@ const UtilSchemaRouteNormalize = function (queries: TypeGenericObjectOptionalVal
         height,
         width
     };
-    return queryString;
-};
-
-const UtilSchemaRouteList = [ "pos", "a", "b", "c", "f", "q", "h", "w" ];
-
-const UtilSchemaRoute = function (url: string, route: string): TypeQueryStringRoute | string {
-    const currentUrl = url.replaceAll(route, "");
-    const currentUrlQueries = new URLSearchParams(currentUrl);
-    const queries = new Object() as TypeGenericObjectOptionalValues;
-    for (const field of UtilSchemaRouteList) {
-        queries[field] = currentUrlQueries.get(field);
-    }
-    const queryString = UtilSchemaRouteNormalize(queries);
     return queryString;
 };
 

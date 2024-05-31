@@ -1,26 +1,31 @@
 import { ServerResponse } from "node:http";
 
-import type { TypeGenericRequest } from "src/types/TypeGeneric";
-
-import UtilToolResponse from "../../utils/tools/UtilToolResponse";
-import UtilSchemaRoute from "../../utils/schemas/UtilSchemaRoute";
-import UtilToolResponseError from "../../utils/tools/UtilToolResponseError";
+import type { TypeGenericRequest } from "../../types/TypeGeneric";
 
 import ServiceLeaflet from "../../services/leaflet/ServiceLeaflet";
 import ServicePuppeteerCapture from "../../services/puppeteer/ServicePuppeteerCapture";
 import ServiceLeafletScriptRoute from "../../services/leaflet/ServiceLeafletScriptRoute";
 
+import UtilToolResponse from "../../utils/tools/UtilToolResponse";
+import UtilSchemaRoute from "../../utils/schemas/UtilSchemaRoute";
+import UtilFunctionQuery from "../../utils/functions/UtilFunctionQuery";
+import UtilToolResponseError from "../../utils/tools/UtilToolResponseError";
+
 const ControllerImgRoute = async function (request: TypeGenericRequest, response: ServerResponse): Promise<void> {
     const { url, data } = request;
-    if (!data.routeUrl) {
-        return UtilToolResponseError(response, "no route url")
+    if (!data.routeUrl || typeof data.routeUrl !== "string") {
+        return UtilToolResponseError(response, "no route url");
     }
-    const routeUrl = String(data.routeUrl);
-    const queryString = UtilSchemaRoute(url, routeUrl);
-    if (typeof queryString === "string") {
-        return UtilToolResponseError(response, queryString, true);
+    const { routeUrl } = data;
+    const queries = UtilFunctionQuery(url, routeUrl);
+    if (typeof queries === "string") {
+        return UtilToolResponseError(response, queries, true);
     }
-    const { positions, pointA, pointB, color, format, quality, height, width } = queryString;
+    const queryParsed = UtilSchemaRoute(queries);
+    if (typeof queryParsed === "string") {
+        return UtilToolResponseError(response, queryParsed, true);
+    }
+    const { positions, pointA, pointB, color, format, quality, height, width } = queryParsed;
     const positionsStringified = JSON.stringify(positions);
     const script = ServiceLeafletScriptRoute(positionsStringified, color, pointA, pointB);
     const contentOptions = { script, height, width };

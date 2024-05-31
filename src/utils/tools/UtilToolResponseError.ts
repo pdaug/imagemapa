@@ -1,6 +1,6 @@
 import { ServerResponse } from "node:http";
 
-import type { TypeQueryStringFormat } from "src/types/TypeQueryString";
+import type { TypeQueryStringFormat } from "../../types/TypeQueryString";
 
 import ServiceHtml from "../../services/html/ServiceHtml";
 import ServiceHtmlElement from "../../services/html/ServiceHtmlElement";

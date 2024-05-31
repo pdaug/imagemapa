@@ -1,13 +1,13 @@
-const UtilValidatorSize = function (size: string, defaultSize: number, sizeMinimum = 100, sizeMaximum = 1000): number {
-    const sizeParsed = parseInt(size);
+const UtilValidatorSize = function (size: unknown, defaultSize: number, sizeMinimum = 100, sizeMaximum = 1000): number {
     const isSizeValid = (
-        Boolean(sizeParsed) &&
-        !isNaN(sizeParsed) &&
-        isFinite(sizeParsed) &&
-        sizeParsed >= sizeMinimum &&
-        sizeParsed <= sizeMaximum
+        Boolean(size) &&
+        typeof size === "number" &&
+        !isNaN(size) &&
+        isFinite(size) &&
+        size >= sizeMinimum &&
+        size <= sizeMaximum
     );
-    const newSize = (isSizeValid) ? sizeParsed : defaultSize;
+    const newSize = (isSizeValid) ? size : defaultSize;
     return newSize;
 };
 

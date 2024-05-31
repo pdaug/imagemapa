@@ -1,15 +1,15 @@
 import ConfigLeaflet from "../../config/ConfigLeaflet";
 
-const UtilValidatorZoom = function (zoom: string): number {
-    const zoomParsed = parseFloat(zoom);
+const UtilValidatorZoom = function (zoom: unknown): number {
     const isZoomValid = (
-        Boolean(zoomParsed) &&
-        !isNaN(zoomParsed) &&
-        isFinite(zoomParsed) &&
-        zoomParsed >= ConfigLeaflet.zoomMinimium &&
-        zoomParsed <= ConfigLeaflet.zoomMaximum
+        Boolean(zoom) &&
+        typeof zoom === "number" &&
+        !isNaN(zoom) &&
+        isFinite(zoom) &&
+        zoom >= ConfigLeaflet.zoomMinimium &&
+        zoom <= ConfigLeaflet.zoomMaximum
     );
-    const newZoom = (isZoomValid) ? zoomParsed : ConfigLeaflet.zoomDefault;
+    const newZoom = (isZoomValid) ? zoom : ConfigLeaflet.zoomDefault;
     return newZoom;
 };
 

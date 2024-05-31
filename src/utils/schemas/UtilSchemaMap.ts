@@ -1,7 +1,5 @@
-import { URLSearchParams } from "node:url";
-
+import type { TypeGenericObject } from "../../types/TypeGeneric";
 import type { TypeQueryStringMap } from "../../types/TypeQueryString";
-import type { TypeGenericObjectOptionalValues } from "../../types/TypeGeneric";
 
 import UtilValidatorSize from "../validators/UtilValidatorSize";
 import UtilValidatorZoom from "../validators/UtilValidatorZoom";
@@ -9,7 +7,7 @@ import UtilValidatorFormat from "../validators/UtilValidatorFormat";
 import UtilValidatorQuality from "../validators/UtilValidatorQuality";
 import UtilValidatorPosition from "../validators/UtilValidatorPosition";
 
-const UtilSchemaMapNormalize = function (queries: TypeGenericObjectOptionalValues): TypeQueryStringMap | string {
+const UtilSchemaMap = function (queries: TypeGenericObject): TypeQueryStringMap | string {
     const position = UtilValidatorPosition(queries.lat, queries.lng);
     if (typeof position === "string") {
         return position;
@@ -29,19 +27,6 @@ const UtilSchemaMapNormalize = function (queries: TypeGenericObjectOptionalValue
         width,
         height,
     };
-    return queryString;
-};
-
-const UtilSchemaMapList = [ "lat", "lng", "z", "f", "q", "w", "h" ];
-
-const UtilSchemaMap = function (url: string, pathUrl: string): TypeQueryStringMap | string {
-    const currentUrl = url.replaceAll(pathUrl, "");
-    const currentUrlQueries = new URLSearchParams(currentUrl);
-    const queries = new Object() as TypeGenericObjectOptionalValues;
-    for (const query of UtilSchemaMapList) {
-        queries[query] = currentUrlQueries.get(query);
-    }
-    const queryString = UtilSchemaMapNormalize(queries);
     return queryString;
 };
 

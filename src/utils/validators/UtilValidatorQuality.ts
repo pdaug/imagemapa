@@ -2,16 +2,16 @@ const qualityMinimum = 10;
 const qualityMaximum = 100;
 const qualityDefault = 70;
 
-const UtilValidatorQuality = function (quality: string): number {
-    const qualityParsed = parseFloat(quality);
+const UtilValidatorQuality = function (quality: unknown): number {
     const isQualityValid = (
-        Boolean(qualityParsed) &&
-        !isNaN(qualityParsed) &&
-        isFinite(qualityParsed) &&
-        qualityParsed >= qualityMinimum &&
-        qualityParsed <= qualityMaximum
+        Boolean(quality) &&
+        typeof quality === "number" &&
+        !isNaN(quality) &&
+        isFinite(quality) &&
+        quality >= qualityMinimum &&
+        quality <= qualityMaximum
     );
-    const newQuality = (isQualityValid) ? qualityParsed : qualityDefault;
+    const newQuality = (isQualityValid) ? quality : qualityDefault;
     return newQuality;
 };
 

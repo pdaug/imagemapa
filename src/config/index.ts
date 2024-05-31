@@ -1,3 +1,6 @@
+const version = 1.0;
+const server = "imagemapa-1";
+
 const secure = Boolean(process.env.SERVER_SECURE);
 const protocol = (secure) ? "https" : "http";
 
@@ -9,6 +12,6 @@ const port = (process.env.SERVER_HOST) ? parseInt(process.env.SERVER_PORT) : por
 
 const url = `${protocol}://${host}:${port}`;
 
-const Config = { secure, protocol, host, port, url };
+const Config = { version, server, secure, protocol, host, port, url };
 
 export default Config;

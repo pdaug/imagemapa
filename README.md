@@ -95,10 +95,15 @@ curl \
     https://imagemapa.com.br/img/map
 ```
 
-Outro exemplo contendo apenas o endereço da rota:
+Abaixo um outro exemplo de como o consumo deve ser feito com HTML:
 
-```
-https://imagemapa.com.br/img/map?lat=48.8583287&lng=2.2944781&z=16&f=jpg&q=70&w=640&h=480
+```html
+<img 
+    width="640"
+    height="480"
+    alt="imagemapa img map"
+    src="http://localhost:8080/img/map?lat=48.8583287&lng=2.2944781&z=16&f=jpg&q=70&w=640&h=480" 
+/>
 ```
 
 ## Rota IMG Route
@@ -134,10 +139,15 @@ curl \
     https://imagemapa.com.br/img/route
 ```
 
-Outro exemplo contendo apenas o endereço da rota:
+Abaixo um outro exemplo de como o consumo deve ser feito com HTML:
 
-```
-https://imagemapa.com.br/img/route?pos=40.748885,-73.987644;40.747808,-73.985039;40.748468,-73.984588;40.748817,-73.985516&a=1&b=2&c=f54242&f=jpg&q=70&w=640&h=480
+```html
+<img 
+    width="640"
+    height="480"
+    alt="imagemapa img route"
+    src="http://localhost:8080/img/route?pos=40.748885,-73.987644;40.747808,-73.985039;40.748468,-73.984588;40.748817,-73.985516&a=1&b=2&c=f54242&f=jpg&q=70&w=640&h=480" 
+/>
 ```
 
 ## Rota IMG Icon
@@ -175,8 +185,13 @@ curl \
     https://imagemapa.com.br/img/icon
 ```
 
-Outro exemplo contendo apenas o endereço da rota:
+Abaixo um outro exemplo de como o consumo deve ser feito com HTML:
 
-```
-https://imagemapa.com.br/img/icon?lat=41.8896913&lng=12.4917166&z=16&icon=https%3A%2F%2Fraw.githubusercontent.com%2Fpdaug%2Fimagemapa%2Fmain%2Fpublic%2Ficon.png&s=96&q=70&f=jpg&w=640&h=480
+```html
+<img 
+    width="640"
+    height="480"
+    alt="imagemapa img icon"
+    src="http://localhost:8080/img/icon?lat=41.8896913&lng=12.4917166&z=18&icon=https%3A%2F%2Fraw.githubusercontent.com%2Fpdaug%2Fimagemapa%2Fmain%2Fpublic%2Ficon.png&s=96&f=jpg&q=70&w=640&h=480" 
+/>
 ```

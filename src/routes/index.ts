@@ -1,6 +1,11 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 
-import type { TypeGenericObjectUnkownValues } from "src/types/TypeGeneric";
+import { TypeGenericObject } from "../types/TypeGeneric";
+
+import MiddlewareCors from "../middleware/MiddlewareCors";
+
+import UtilToolRoute from "../utils/tools/UtilToolRoute";
+import UtilToolNotFound from "../utils/tools/UtilToolNotFound";
 
 import ControllerEmbedMap from "../controllers/embed/ControllerEmbedMap";
 import ControllerImgIcon from "../controllers/img/ControllerImgIcon";
@@ -9,25 +14,22 @@ import ControllerImgRoute from "../controllers/img/ControllerImgRoute";
 import ControllerSource from "../controllers/source/ControllerSource";
 import ControllerApiAddress from "../controllers/api/ControllerApiAddress";
 
-import UtilToolRoute from "../utils/tools/UtilToolRoute";
-import UtilToolNotFound from "../utils/tools/UtilToolNotFound";
-
-import MiddlewareCors from "../middleware/MiddlewareCors";
-
 const Routes = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
 
-    const data = new Object() as TypeGenericObjectUnkownValues;
+    const data = new Object() as TypeGenericObject;
     const newRequest = Object.assign(request, { data });
 
-    UtilToolRoute("GET", "/embed/map", newRequest, MiddlewareCors(response), ControllerEmbedMap);
+    const responseCors = MiddlewareCors(response);
 
-    UtilToolRoute("GET", "/img/map", newRequest, MiddlewareCors(response), ControllerImgMap);
-    UtilToolRoute("GET", "/img/icon", newRequest, MiddlewareCors(response), ControllerImgIcon);
-    UtilToolRoute("GET", "/img/route", newRequest, MiddlewareCors(response), ControllerImgRoute);
+    UtilToolRoute("GET", "/embed/map", newRequest, responseCors, ControllerEmbedMap);
 
-    UtilToolRoute("GET", "/api/address", newRequest, MiddlewareCors(response), ControllerApiAddress);
+    UtilToolRoute("GET", "/img/map", newRequest, responseCors, ControllerImgMap);
+    UtilToolRoute("GET", "/img/icon", newRequest, responseCors, ControllerImgIcon);
+    UtilToolRoute("GET", "/img/route", newRequest, responseCors, ControllerImgRoute);
 
-    UtilToolRoute("GET", "*", newRequest, MiddlewareCors(response), ControllerSource);
+    UtilToolRoute("GET", "/api/address", newRequest, responseCors, ControllerApiAddress);
+
+    UtilToolRoute("GET", "*", newRequest, responseCors, ControllerSource);
 
     UtilToolNotFound(newRequest, response);
 

@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
 
-import type { TypeGenericPosition } from "src/types/TypeGeneric";
+import type { TypeGenericPosition } from "../../types/TypeGeneric";
 
 type ServicePuppeteerAddressParameters = {
     latitude: number;
