@@ -13,6 +13,7 @@ import ControllerImgMap from "../controllers/img/ControllerImgMap";
 import ControllerImgRoute from "../controllers/img/ControllerImgRoute";
 import ControllerSource from "../controllers/source/ControllerSource";
 import ControllerApiAddress from "../controllers/api/ControllerApiAddress";
+import ControllerApiStreet from "../controllers/api/ControllerApiStreet";
 
 const Routes = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
 
@@ -28,6 +29,7 @@ const Routes = async function (request: IncomingMessage, response: ServerRespons
     UtilToolRoute("GET", "/img/route", newRequest, responseCors, ControllerImgRoute);
 
     UtilToolRoute("GET", "/api/address", newRequest, responseCors, ControllerApiAddress);
+    UtilToolRoute("GET", "/api/street", newRequest, responseCors, ControllerApiStreet);
 
     UtilToolRoute("GET", "*", newRequest, responseCors, ControllerSource);
 

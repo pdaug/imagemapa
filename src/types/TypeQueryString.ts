@@ -15,6 +15,13 @@ export type TypeQueryStringMap = TypeQueryStringPosition & {
     height: number;
 };
 
+export type TypeQueryStringStreet = TypeQueryStringPosition & {
+    bearing: number;
+    tilt: number;
+    pitch: number;
+};
+
+
 export type TypeQueryStringIcon = TypeQueryStringMap & {
     icon: string;
     size: number;

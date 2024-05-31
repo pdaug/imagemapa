@@ -1,10 +1,10 @@
 {
   "name": "imagemapa",
-  "version": "1.0.0",
+  "version": "1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc && node dist/index",
+    "dev": "rimraf dist && tsc && node dist/src/index.js",
     "build": "rimraf dist && tsc",
     "test": "jest"
   },

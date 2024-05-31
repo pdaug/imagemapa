@@ -1,0 +1,14 @@
+<iframe 
+    width="640" 
+    height="480"
+    frameborder="0" 
+    src="">
+</iframe>
+
+<script>
+    const elementDiv = document.querySelector("iframe");
+    fetch("http://localhost:8080/api/street?lat=51.5320122&lng=-0.1773339&b=0&p=0")
+        .then(response => response.json())
+        .then(data => elementDiv.setAttribute("src", data.result))
+        .catch(err => console.error(err));
+</script>
