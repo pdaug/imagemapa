@@ -1,5 +1,4 @@
-const version = 1.0;
-const server = "imagemapa-1";
+export { version, name as server } from "../../package.json";
 
 const secure = Boolean(process.env.SERVER_SECURE);
 const protocol = (secure) ? "https" : "http";
