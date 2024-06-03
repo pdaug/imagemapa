@@ -1,7 +1,7 @@
 import { ServerResponse } from "node:http";
 
 import type { TypeGenericRequest } from "../../types/TypeGeneric";
-import UtilFunctionResponse from "../../utils/tools/UtilToolResponse";
+import UtilFunctionResponse from "./UtilToolResponse";
 
 const UtilToolNotFound = async function (request: TypeGenericRequest, response: ServerResponse): Promise<void> {
     if (!request.data.ok) {

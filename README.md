@@ -41,6 +41,48 @@ Outro exemplo contendo apenas o endereço da rota:
 https://imagemapa.com.br/api/address?lat=51.5320122&lng=-0.1773339
 ```
 
+## Rota API Street
+
+A rota `/api/street` retorna estruturadamente os dados contendo como resultado o endereço da página dinâmica do Google Street View para usar em incorporação em websites e aplicações.
+
+A tabela com todos os parâmetros aceitos na rota:
+
+|Query String|Name           |Type   |Default|Values        |Required|
+|------------|---------------|-------|-------|--------------|--------|
+|`lat`       |Latitude       |number |0      |-90 to 90     |true    |
+|`lng`       |Longitude      |number |0      |-180 to 180   |true    |
+|`b`         |Bearing        |number |0      |0 to 360      |false   |
+|`t`         |Tilt           |number |0      |-90 to 90     |false   |
+|`p`         |Pitch          |number |0      |-90 to 90     |false   |
+ 
+Um exemplo de como deve ser feito o consumo da rota:
+
+```js
+fetch("https://imagemapa.com.br/api/street?lat=51.5320122&lng=-0.1773339&b=90&t=45&p=45")
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(err => console.error(err));
+```
+
+A tabela mostrando todos os campos retornado pela rota:
+
+|Field       |Name                 |Type                 |
+|------------|---------------------|---------------------|
+|`version`   |Versão da rota       |number               |
+|`server`    |Nome do servidor     |number               |
+|`status`    |Estado da resposta   |"error" ou "success" |
+|`code`      |Código da resposta   |http code            |
+|`message`   |Mensagem da resposta |string               |
+|`path`      |Caminho da rota      |string               |
+|`result`    |Resultado da rota    |string               |
+|`timestamp` |Tempo de repsosta    |number               |
+
+Outro exemplo contendo apenas o endereço da rota:
+
+```
+https://imagemapa.com.br/api/street?lat=51.5320122&lng=-0.1773339&b=90&t=45&p=45
+```
+
 ## Rota Embed Map
 
 A rota `/embed/map` retorna uma página dinâmica contendo um mapa localizado na coordenada inserida via parâmetros no endereço de consulta. Com o mapa é possível navegar arrastando o mouse/toque e ampliar com o scroll/pinça.

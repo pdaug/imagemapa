@@ -7,7 +7,7 @@
 
 <script>
     const elementDiv = document.querySelector("iframe");
-    fetch("http://localhost:8080/api/street?lat=51.5320122&lng=-0.1773339&b=0&p=0")
+    fetch("http://localhost:8080/api/street?lat=51.5320122&lng=-0.1773339&b=270&p=40")
         .then(response => response.json())
         .then(data => elementDiv.setAttribute("src", data.result))
         .catch(err => console.error(err));

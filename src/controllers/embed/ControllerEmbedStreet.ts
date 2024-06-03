@@ -2,15 +2,14 @@ import { ServerResponse } from "node:http";
 
 import type { TypeGenericRequest } from "../../types/TypeGeneric";
 
-import ServiceStreetUrl from "../../services/street/ServiceStreetUrl";
+import ServiceStreetEmbed from "../../services/street/ServiceStreetEmbed";
 
-import UtilToolResponse from "../../utils/tools/UtilToolResponse";
 import UtilSchemaStreet from "../../utils/schemas/UtilSchemaStreet";
+import UtilFunctionResponse from "../../utils/tools/UtilToolResponse";
 import UtilFunctionQuery from "../../utils/functions/UtilFunctionQuery";
-import UtilFunctionContent from "../../utils/functions/UtilFunctionContent";
 import UtilToolResponseError from "../../utils/tools/UtilToolResponseError";
 
-const ControllerApiStreet = async function (request: TypeGenericRequest, response: ServerResponse): Promise<void> {
+const ControllerEmbedStreet = async function (request: TypeGenericRequest, response: ServerResponse): Promise<void> {
     const { url, data } = request;
     if (!data.routeUrl || typeof data.routeUrl !== "string") {
         return UtilToolResponseError(response, "no route url");
@@ -22,11 +21,10 @@ const ControllerApiStreet = async function (request: TypeGenericRequest, respons
     }
     const queriesParsed = UtilSchemaStreet(queries);
     if (typeof queriesParsed === "string") {
-        return UtilToolResponseError(response, queriesParsed, true);
+        return UtilToolResponseError(response, queriesParsed);
     }
-    const result = ServiceStreetUrl(queriesParsed);
-    const content = UtilFunctionContent(200, url, result);
-    return UtilToolResponse(response, content, 200);
+    const content = ServiceStreetEmbed(queriesParsed);
+    return UtilFunctionResponse(response, content);
 };
 
-export default ControllerApiStreet;
+export default ControllerEmbedStreet;

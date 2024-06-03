@@ -7,13 +7,14 @@ import MiddlewareCors from "../middleware/MiddlewareCors";
 import UtilToolRoute from "../utils/tools/UtilToolRoute";
 import UtilToolNotFound from "../utils/tools/UtilToolNotFound";
 
-import ControllerEmbedMap from "../controllers/embed/ControllerEmbedMap";
 import ControllerImgIcon from "../controllers/img/ControllerImgIcon";
 import ControllerImgMap from "../controllers/img/ControllerImgMap";
 import ControllerImgRoute from "../controllers/img/ControllerImgRoute";
 import ControllerSource from "../controllers/source/ControllerSource";
 import ControllerApiAddress from "../controllers/api/ControllerApiAddress";
 import ControllerApiStreet from "../controllers/api/ControllerApiStreet";
+import ControllerEmbedMap from "../controllers/embed/ControllerEmbedMap";
+import ControllerEmbedStreet from "../controllers/embed/ControllerEmbedStreet";
 
 const Routes = async function (request: IncomingMessage, response: ServerResponse): Promise<void> {
 
@@ -23,6 +24,7 @@ const Routes = async function (request: IncomingMessage, response: ServerRespons
     const responseCors = MiddlewareCors(response);
 
     UtilToolRoute("GET", "/embed/map", newRequest, responseCors, ControllerEmbedMap);
+    UtilToolRoute("GET", "/embed/street", newRequest, responseCors, ControllerEmbedStreet);
 
     UtilToolRoute("GET", "/img/map", newRequest, responseCors, ControllerImgMap);
     UtilToolRoute("GET", "/img/icon", newRequest, responseCors, ControllerImgIcon);
